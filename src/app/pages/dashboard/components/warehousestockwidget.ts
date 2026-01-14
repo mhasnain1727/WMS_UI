@@ -7,17 +7,21 @@ import { ChartModule } from 'primeng/chart';
     selector: 'app-warehouse-stock-widget',
     imports: [CommonModule, ChartModule],
     template: `
-        <div class="card">
+        <div class="card h-full">
             <div class="font-semibold text-xl mb-6">Stock by Warehouse</div>
-            <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" class="w-full" style="height: 300px;"></p-chart>
+            <div class="flex justify-center" style="min-height: 200px;">
+                <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" class="w-full max-w-64"></p-chart>
+            </div>
             <div class="flex flex-col gap-4 mt-6">
-                <div *ngFor="let item of warehouseData" class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full" [style.backgroundColor]="item.color"></span>
-                        <span class="font-medium">{{ item.name }}</span>
+                @for (item of warehouseData; track item.name) {
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full shrink-0" [style.backgroundColor]="item.color"></span>
+                            <span class="font-medium text-sm">{{ item.name }}</span>
+                        </div>
+                        <span class="text-muted-color text-sm font-medium">{{ item.value | number }} units</span>
                     </div>
-                    <span class="text-muted-color">{{ item.value | number }} units</span>
-                </div>
+                }
             </div>
         </div>
     `
@@ -46,14 +50,21 @@ export class WarehouseStockWidget implements OnInit {
         };
 
         this.chartOptions = {
-            cutout: '60%',
+            cutout: '65%',
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    cornerRadius: 8
                 }
             },
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: true
         };
     }
 }

@@ -18,26 +18,22 @@ import { StockMovementWidget } from './components/stockmovementwidget';
         StockMovementWidget
     ],
     template: `
-        <div class="grid grid-cols-12 gap-8">
-            <!-- Stats Cards -->
+        <div class="grid grid-cols-12 gap-6">
+            <!-- Stats Cards Row -->
             <app-stats-widget></app-stats-widget>
 
-            <!-- Stock Movement Chart -->
+            <!-- Charts Row -->
             <div class="col-span-12 xl:col-span-8">
                 <app-stock-movement-widget></app-stock-movement-widget>
             </div>
-
-            <!-- Warehouse Stock Distribution -->
             <div class="col-span-12 xl:col-span-4">
                 <app-warehouse-stock-widget></app-warehouse-stock-widget>
             </div>
 
-            <!-- Low Stock Alerts -->
+            <!-- Tables Row -->
             <div class="col-span-12 xl:col-span-8">
                 <app-low-stock-widget></app-low-stock-widget>
             </div>
-
-            <!-- Recent Activity -->
             <div class="col-span-12 xl:col-span-4">
                 <app-recent-activity-widget></app-recent-activity-widget>
             </div>
