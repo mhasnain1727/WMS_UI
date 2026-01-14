@@ -37,18 +37,43 @@ export class AuthService {
 
     /**
      * Login user
+     * Mock authentication for development - accepts admin/password
      */
     login(username: string, password: string, rememberMe: boolean = false): Observable<LoginResponse> {
-        return this.http.post<LoginResponse>(`${this.API_URL}/login`, { username, password }).pipe(
-            tap((response) => {
-                this.setToken(response.token, rememberMe);
-                this.setUser(response.user, rememberMe);
-                this.currentUserSubject.next(response.user);
-            }),
-            catchError((error) => {
-                throw error;
-            })
-        );
+        // Mock authentication - check for default credentials
+        if (username === 'admin' && password === 'password') {
+            const mockUser: User = {
+                id: '1',
+                username: 'admin',
+                email: 'admin@wms.com',
+                firstName: 'Admin',
+                lastName: 'User',
+                roles: ['admin']
+            };
+            
+            const mockResponse: LoginResponse = {
+                token: 'mock-jwt-token-' + Date.now(),
+                user: mockUser
+            };
+
+            // Simulate API delay
+            return new Observable<LoginResponse>(observer => {
+                setTimeout(() => {
+                    this.setToken(mockResponse.token, rememberMe);
+                    this.setUser(mockResponse.user, rememberMe);
+                    this.currentUserSubject.next(mockResponse.user);
+                    observer.next(mockResponse);
+                    observer.complete();
+                }, 500);
+            });
+        } else {
+            // Return error for invalid credentials
+            return new Observable<LoginResponse>(observer => {
+                setTimeout(() => {
+                    observer.error({ status: 401, message: 'Invalid username or password' });
+                }, 500);
+            });
+        }
     }
 
     /**

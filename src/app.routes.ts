@@ -6,17 +6,17 @@ import { Notfound } from './app/pages/notfound/notfound';
 import { authGuard } from './app/core/guards/auth.guard';
 
 export const appRoutes: Routes = [
+    { path: '', component: Landing },
     {
-        path: '',
+        path: 'dashboard',
         component: AppLayout,
         canActivate: [authGuard],
         children: [
-            { path: '', component: Dashboard },
-            { path: 'dashboard', component: Dashboard }
+            { path: '', component: Dashboard }
         ]
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+    { path: '**', redirectTo: '/' }
 ];

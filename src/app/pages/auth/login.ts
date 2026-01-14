@@ -99,8 +99,8 @@ export class Login {
     private router = inject(Router);
     private messageService = inject(MessageService);
 
-    username: string = '';
-    password: string = '';
+    username: string = 'admin';
+    password: string = 'password';
     rememberMe: boolean = false;
     loading: boolean = false;
 
@@ -126,7 +126,8 @@ export class Login {
                 });
                 
                 // Get return URL from route parameters or default to dashboard
-                const returnUrl = this.router.parseUrl(this.router.url).queryParams['returnUrl'] || '/';
+                const queryParams = this.router.parseUrl(this.router.url).queryParams;
+                const returnUrl = queryParams['returnUrl'] || '/dashboard';
                 this.router.navigate([returnUrl]);
             },
             error: (error) => {
