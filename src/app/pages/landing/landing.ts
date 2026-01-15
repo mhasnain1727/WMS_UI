@@ -172,7 +172,7 @@ interface ModuleInfo {
                         <h2 class="text-3xl font-bold mb-4 bg-gradient-to-r from-surface-900 to-primary dark:from-white dark:to-primary-300 bg-clip-text text-transparent">
                             System Modules
                         </h2>
-                        <p class="text-lg text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+                        <p class="text-lg text-surface-600 dark:text-surface-400 text-center">
                             Discover our comprehensive suite of specialized modules designed to transform your infrastructure management workflow
                         </p>
                     </div>
