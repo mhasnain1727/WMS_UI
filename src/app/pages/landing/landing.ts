@@ -55,30 +55,30 @@ interface ModuleInfo {
                 </div>
 
                 <!-- Hero Content -->
-                <div class="relative container mx-auto px-4 py-16 lg:py-24">
+                <div class="relative container mx-auto px-4 py-8 lg:py-12">
                     <div class="max-w-4xl mx-auto text-center">
-                        <div class="inline-flex items-center px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-6 border border-primary/20">
+                        <div class="inline-flex items-center px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-3 border border-primary/20">
                             <i class="pi pi-star-fill text-primary mr-2"></i>
                             <span class="text-sm font-medium text-primary">Comprehensive Infrastructure Management</span>
                         </div>
 
-                        <h1 class="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
+                        <h1 class="text-4xl lg:text-6xl font-bold mb-3 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
                             Transform Infrastructure<br>Project Management
                         </h1>
 
-                        <p class="text-xl text-surface-600 dark:text-surface-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                        <p class="text-xl text-surface-600 dark:text-surface-300 mb-4 leading-relaxed">
                             Streamline your department's workflow with our integrated Work Management System. From estimate preparation to project completion, manage every aspect of infrastructure development efficiently.
                         </p>
 
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-                            <p-button label="Explore Modules" icon="pi pi-arrow-down" routerLink="#modules" styleClass="bg-gradient-to-r from-primary to-primary-600 border-none shadow-lg hover:shadow-xl px-8 py-3 text-lg"></p-button>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                            <p-button label="Explore Modules" icon="pi pi-arrow-down" (click)="scrollToModules()" styleClass="bg-gradient-to-r from-primary to-primary-600 border-none shadow-lg hover:shadow-xl px-8 py-3 text-lg"></p-button>
                             <p-button label="Get Started" icon="pi pi-play" routerLink="/auth/login" [outlined]="true" styleClass="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 text-lg"></p-button>
                         </div>
 
                         <!-- Stats -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
                             <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
-                                <div class="text-2xl font-bold text-primary mb-1">10</div>
+                                <div class="text-2xl font-bold text-primary mb-1">10+</div>
                                 <div class="text-sm text-surface-600 dark:text-surface-400">Core Modules</div>
                             </div>
                             <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
@@ -99,16 +99,16 @@ interface ModuleInfo {
             </div>
 
             <!-- Main Content -->
-            <div class="container mx-auto px-4 py-16" id="modules">
+            <div class="container mx-auto px-4 py-16">
                 <!-- Introduction Section -->
-                <div class="max-w-6xl mx-auto mb-16">
+                <div class="max-w-6xl mx-auto mb-8">
                     <div class="bg-white dark:bg-surface-800 rounded-2xl shadow-xl border border-surface-200 dark:border-surface-700 overflow-hidden">
                         <div class="bg-gradient-to-r from-primary to-primary-600 p-6 text-white">
                             <h2 class="text-3xl font-bold mb-2">Scope of Work and Their Acceptance</h2>
                             <p class="text-primary-100">Comprehensive system overview and module specifications</p>
                         </div>
 
-                        <div class="p-8">
+                        <div class="p-6">
                             <div class="grid md:grid-cols-3 gap-8 mb-8">
                                 <div class="text-center">
                                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -168,8 +168,8 @@ interface ModuleInfo {
 
                 <!-- Modules Grid -->
                 <div class="max-w-7xl mx-auto">
-                    <div class="text-center mb-12">
-                        <h2 class="text-3xl font-bold mb-4 bg-gradient-to-r from-surface-900 to-primary dark:from-white dark:to-primary-300 bg-clip-text text-transparent">
+                    <div class="text-center mb-6">
+                        <h2 id="modules" class="text-3xl font-bold mb-4 bg-gradient-to-r from-surface-900 to-primary dark:from-white dark:to-primary-300 bg-clip-text text-transparent">
                             System Modules
                         </h2>
                         <p class="text-lg text-surface-600 dark:text-surface-400 text-center">
@@ -224,7 +224,7 @@ interface ModuleInfo {
             </div>
 
             <!-- Footer -->
-            <div class="bg-gradient-to-r from-surface-900 to-surface-800 dark:from-surface-950 dark:to-surface-900 border-t border-surface-700/50 mt-20">
+            <div class="bg-gradient-to-r from-surface-900 to-surface-800 dark:from-surface-950 dark:to-surface-900 border-t border-surface-700/50 mt-8">
                 <div class="container mx-auto px-4 py-12">
                     <div class="grid md:grid-cols-4 gap-8 mb-8">
                         <div class="md:col-span-2">
@@ -571,5 +571,15 @@ export class Landing {
     openModuleDialog(module: ModuleInfo & { icon: string; shortDescription: string }): void {
         this.selectedModule = module;
         this.displayDialog = true;
+    }
+
+    scrollToModules(): void {
+        const element = document.getElementById('modules');
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     }
 }
