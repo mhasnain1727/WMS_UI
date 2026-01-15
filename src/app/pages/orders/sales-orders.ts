@@ -6,9 +6,9 @@ import { PlaceholderPage } from '../../shared/components/placeholder-page';
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Sales Orders"
-        description="Manage customer sales orders and track order fulfillment status."
-        icon="pi-file-export">
+        title="Progress Monitoring"
+        description="Monitor project progress, milestones, and track execution status in real-time."
+        icon="pi-chart-bar">
     </app-placeholder-page>`
 })
 export class SalesOrders {}

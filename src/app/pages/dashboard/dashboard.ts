@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatsWidget } from './components/statswidget';
-import { LowStockWidget } from './components/lowstockwidget';
-import { RecentActivityWidget } from './components/recentactivitywidget';
-import { WarehouseStockWidget } from './components/warehousestockwidget';
-import { StockMovementWidget } from './components/stockmovementwidget';
+import { StatsWidget } from './components/stats-widget';
+import { PendingApprovalsWidget } from './components/pending-approvals-widget';
+import { RecentActivityWidget } from './components/recent-activity-widget';
+import { ProjectStatusWidget } from './components/project-status-widget';
+import { ProjectExpenditureWidget } from './components/project-expenditure-widget';
+import { DepartmentPerformanceWidget } from './components/department-performance-widget';
 
 @Component({
     selector: 'app-dashboard',
@@ -12,10 +13,11 @@ import { StockMovementWidget } from './components/stockmovementwidget';
     imports: [
         CommonModule,
         StatsWidget,
-        LowStockWidget,
+        PendingApprovalsWidget,
         RecentActivityWidget,
-        WarehouseStockWidget,
-        StockMovementWidget
+        ProjectStatusWidget,
+        ProjectExpenditureWidget,
+        DepartmentPerformanceWidget
     ],
     template: `
         <div class="grid grid-cols-12 gap-6">
@@ -24,15 +26,15 @@ import { StockMovementWidget } from './components/stockmovementwidget';
 
             <!-- Charts Row -->
             <div class="col-span-12 xl:col-span-8">
-                <app-stock-movement-widget></app-stock-movement-widget>
+                <app-project-expenditure-widget></app-project-expenditure-widget>
             </div>
             <div class="col-span-12 xl:col-span-4">
-                <app-warehouse-stock-widget></app-warehouse-stock-widget>
+                <app-project-status-widget></app-project-status-widget>
             </div>
 
             <!-- Tables Row -->
             <div class="col-span-12 xl:col-span-8">
-                <app-low-stock-widget></app-low-stock-widget>
+                <app-pending-approvals-widget></app-pending-approvals-widget>
             </div>
             <div class="col-span-12 xl:col-span-4">
                 <app-recent-activity-widget></app-recent-activity-widget>

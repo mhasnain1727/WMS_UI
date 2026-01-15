@@ -111,10 +111,10 @@ import { AuthService } from '../../core/services/auth.service';
             <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
                 <!-- Background Pattern Overlay -->
                 <div class="absolute inset-0 opacity-10">
-                    <div class="absolute top-10 left-10 text-8xl text-primary"><i class="pi pi-box"></i></div>
-                    <div class="absolute top-20 right-20 text-6xl text-primary-400"><i class="pi pi-truck"></i></div>
+                    <div class="absolute top-10 left-10 text-8xl text-primary"><i class="pi pi-building"></i></div>
+                    <div class="absolute top-20 right-20 text-6xl text-primary-400"><i class="pi pi-file-text"></i></div>
                     <div class="absolute bottom-20 left-20 text-7xl text-primary-300"><i class="pi pi-chart-line"></i></div>
-                    <div class="absolute bottom-10 right-10 text-5xl text-primary-500"><i class="pi pi-shopping-cart"></i></div>
+                    <div class="absolute bottom-10 right-10 text-5xl text-primary-500"><i class="pi pi-users"></i></div>
                 </div>
 
                 <!-- Content -->
@@ -122,17 +122,17 @@ import { AuthService } from '../../core/services/auth.service';
                     <div class="max-w-md text-center animate-fade-in-up">
                         <!-- Main Icon -->
                         <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-10 rounded-full mb-4 backdrop-blur-sm border border-white border-opacity-20">
-                            <i class="pi pi-warehouse text-4xl text-white"></i>
+                            <i class="pi pi-building text-4xl text-white"></i>
                         </div>
 
                         <!-- Title -->
                         <h1 class="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                            Warehouse Management System
+                            Work Management System
                         </h1>
 
                         <!-- Subtitle -->
                         <p class="text-lg text-gray-300 mb-4 leading-relaxed">
-                            Streamline your inventory, optimize operations, and boost efficiency with our comprehensive warehouse solution.
+                            Infrastructure Management Portal for efficient project execution and monitoring.
                         </p>
 
                         <!-- Feature List -->
@@ -141,19 +141,19 @@ import { AuthService } from '../../core/services/auth.service';
                                 <div class="w-8 h-8 bg-primary bg-opacity-20 rounded-full flex items-center justify-center">
                                     <i class="pi pi-check text-primary text-sm"></i>
                                 </div>
-                                <span class="text-gray-300">Real-time inventory tracking</span>
+                                <span class="text-gray-300">Project estimation & approvals</span>
                             </div>
                             <div class="flex items-center space-x-3">
                                 <div class="w-8 h-8 bg-primary bg-opacity-20 rounded-full flex items-center justify-center">
                                     <i class="pi pi-check text-primary text-sm"></i>
                                 </div>
-                                <span class="text-gray-300">Automated order processing</span>
+                                <span class="text-gray-300">Tender & contract management</span>
                             </div>
                             <div class="flex items-center space-x-3">
                                 <div class="w-8 h-8 bg-primary bg-opacity-20 rounded-full flex items-center justify-center">
                                     <i class="pi pi-check text-primary text-sm"></i>
                                 </div>
-                                <span class="text-gray-300">Advanced analytics & reporting</span>
+                                <span class="text-gray-300">Progress monitoring & reporting</span>
                             </div>
                         </div>
 
@@ -176,10 +176,10 @@ import { AuthService } from '../../core/services/auth.service';
             <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-surface-950 dark:via-surface-900 dark:to-surface-800 flex items-center justify-center p-2 lg:p-4 relative overflow-hidden">
                 <!-- Background Pattern for Mobile -->
                 <div class="absolute inset-0 opacity-5 dark:opacity-10 lg:hidden">
-                    <div class="absolute top-10 left-10 text-6xl text-primary"><i class="pi pi-box"></i></div>
-                    <div class="absolute top-20 right-20 text-4xl text-primary-400"><i class="pi pi-truck"></i></div>
+                    <div class="absolute top-10 left-10 text-6xl text-primary"><i class="pi pi-building"></i></div>
+                    <div class="absolute top-20 right-20 text-4xl text-primary-400"><i class="pi pi-file-text"></i></div>
                     <div class="absolute bottom-20 left-20 text-5xl text-primary-300"><i class="pi pi-chart-line"></i></div>
-                    <div class="absolute bottom-10 right-10 text-3xl text-primary-500"><i class="pi pi-shopping-cart"></i></div>
+                    <div class="absolute bottom-10 right-10 text-3xl text-primary-500"><i class="pi pi-users"></i></div>
                 </div>
 
                 <div class="w-full max-w-md relative z-10 animate-fade-in-up">
@@ -187,6 +187,17 @@ import { AuthService } from '../../core/services/auth.service';
                     <div class="w-full bg-white dark:bg-surface-900 rounded-2xl shadow-2xl border border-surface-200 dark:border-surface-700 overflow-hidden transform transition-all duration-300 hover:shadow-3xl animate-fade-in-up">
                         <!-- Header Section -->
                         <div class="bg-gradient-to-r from-primary via-primary-600 to-primary-700 p-4 text-center relative">
+                            <!-- Home Button -->
+                            <div class="absolute top-3 right-3">
+                                <p-button
+                                    routerLink="/home"
+                                    label="Home"
+                                    icon="pi pi-home"
+                                    styleClass="p-button-sm p-button-outlined p-button-text bg-white bg-opacity-10 border-white border-opacity-30 text-white hover:bg-opacity-20 transition-all duration-200"
+                                    pRipple
+                                ></p-button>
+                            </div>
+
                             <div class="inline-flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-full mb-3 backdrop-blur-sm">
                                 <i class="pi pi-sign-in text-xl text-white"></i>
                             </div>
@@ -276,7 +287,7 @@ import { AuthService } from '../../core/services/auth.service';
                             <div class="pt-1">
                                 <p-button
                                     type="submit"
-                                    label="Access System"
+                                    label="Sign In to Portal"
                                     styleClass="w-full p-3 bg-gradient-to-r from-primary to-primary-600 hover:from-primary-600 hover:to-primary-700 border-none rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                                     [loading]="loading"
                                     [disabled]="!loginForm.form.valid || loading"

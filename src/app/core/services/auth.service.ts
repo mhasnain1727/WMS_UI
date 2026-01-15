@@ -26,8 +26,8 @@ export class AuthService {
     private http = inject(HttpClient);
     private router = inject(Router);
     
-    private readonly TOKEN_KEY = 'wms_auth_token';
-    private readonly USER_KEY = 'wms_user';
+    private readonly TOKEN_KEY = 'gwms_auth_token';
+    private readonly USER_KEY = 'gwms_user';
     private readonly API_URL = '/api/auth'; // Update with your API endpoint
 
     private currentUserSubject = new BehaviorSubject<User | null>(this.getStoredUser());
@@ -45,9 +45,9 @@ export class AuthService {
             const mockUser: User = {
                 id: '1',
                 username: 'admin',
-                email: 'admin@wms.com',
-                firstName: 'Admin',
-                lastName: 'User',
+                email: 'admin@gwms.gov.in',
+                firstName: 'System',
+                lastName: 'Administrator',
                 roles: ['admin']
             };
             

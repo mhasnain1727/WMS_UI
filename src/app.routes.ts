@@ -5,43 +5,46 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { authGuard } from './app/core/guards/auth.guard';
 
-// Warehouse Operations
-import { Inventory } from './app/pages/inventory/inventory';
-import { Inward } from './app/pages/inward/inward';
-import { Outward } from './app/pages/outward/outward';
-import { StockTransfer } from './app/pages/stock-transfer/stock-transfer';
-import { StockAdjustment } from './app/pages/stock-adjustment/stock-adjustment';
+// Project Planning
+import { Inventory } from './app/pages/inventory/estimate-preparation';
+import { Inward } from './app/pages/inward/technical-sanctions';
+import { Outward } from './app/pages/outward/draft-tender-papers';
 
-// Master Data
-import { Products } from './app/pages/masters/products';
-import { Categories } from './app/pages/masters/categories';
-import { Warehouses } from './app/pages/masters/warehouses';
-import { Locations } from './app/pages/masters/locations';
-import { Suppliers } from './app/pages/masters/suppliers';
-import { Customers } from './app/pages/masters/customers';
-import { UOM } from './app/pages/masters/uom';
+// Master Data Management
+import { Products } from './app/pages/masters/projects';
+import { Categories } from './app/pages/masters/contractors';
+import { Warehouses } from './app/pages/masters/divisions';
+import { Locations } from './app/pages/masters/work-categories';
+import { Suppliers } from './app/pages/masters/materials';
+import { Customers } from './app/pages/masters/rate-analysis';
 
-// Orders
-import { PurchaseOrders } from './app/pages/orders/purchase-orders';
-import { SalesOrders } from './app/pages/orders/sales-orders';
-import { ReturnOrders } from './app/pages/orders/return-orders';
+// Tender & Contract Management
+import { TenderCreation } from './app/pages/orders/tender-creation';
+import { BidEvaluation } from './app/pages/orders/bid-evaluation';
+import { ContractAward } from './app/pages/orders/contract-award';
 
-// Reports
+// Project Execution & Monitoring
+import { WorkOrderManagement } from './app/pages/orders/work-order-management';
+import { ProgressMonitoring } from './app/pages/orders/progress-monitoring';
+import { EMeasurementBook } from './app/pages/orders/e-measurement-book';
+import { EBilling } from './app/pages/orders/e-billing';
+
+// Reports & Analytics
 import { StockReport } from './app/pages/reports/stock-report';
 import { InwardReport } from './app/pages/reports/inward-report';
 import { OutwardReport } from './app/pages/reports/outward-report';
 import { MovementReport } from './app/pages/reports/movement-report';
 import { AgingReport } from './app/pages/reports/aging-report';
 
-// Admin
+// System Administration
 import { Users } from './app/pages/admin/users';
 import { Roles } from './app/pages/admin/roles';
 import { Settings } from './app/pages/admin/settings';
 import { AuditLogs } from './app/pages/admin/audit-logs';
 
 export const appRoutes: Routes = [
-    { path: '', component: Landing },
-    { path: 'landing', component: Landing },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: Landing },
     {
         path: '',
         component: AppLayout,
@@ -50,42 +53,45 @@ export const appRoutes: Routes = [
             // Dashboard
             { path: 'dashboard', component: Dashboard },
 
-            // Warehouse Operations
-            { path: 'inventory', component: Inventory },
-            { path: 'inward', component: Inward },
-            { path: 'outward', component: Outward },
-            { path: 'stock-transfer', component: StockTransfer },
-            { path: 'stock-adjustment', component: StockAdjustment },
+            // Project Planning
+            { path: 'project-planning/estimate-preparation', component: Inventory },
+            { path: 'project-planning/technical-sanctions', component: Inward },
+            { path: 'project-planning/draft-tender-papers', component: Outward },
 
-            // Master Data
-            { path: 'masters/products', component: Products },
-            { path: 'masters/categories', component: Categories },
-            { path: 'masters/warehouses', component: Warehouses },
-            { path: 'masters/locations', component: Locations },
-            { path: 'masters/suppliers', component: Suppliers },
-            { path: 'masters/customers', component: Customers },
-            { path: 'masters/uom', component: UOM },
+            // Master Data Management
+            { path: 'masters/projects', component: Products },
+            { path: 'masters/contractors', component: Categories },
+            { path: 'masters/divisions', component: Warehouses },
+            { path: 'masters/work-categories', component: Locations },
+            { path: 'masters/materials', component: Suppliers },
+            { path: 'masters/rate-analysis', component: Customers },
 
-            // Orders
-            { path: 'orders/purchase', component: PurchaseOrders },
-            { path: 'orders/sales', component: SalesOrders },
-            { path: 'orders/returns', component: ReturnOrders },
+            // Tender & Contract Management
+            { path: 'tender-management/tender-creation', component: TenderCreation },
+            { path: 'tender-management/bid-evaluation', component: BidEvaluation },
+            { path: 'tender-management/contract-award', component: ContractAward },
 
-            // Reports
-            { path: 'reports/stock', component: StockReport },
-            { path: 'reports/inward', component: InwardReport },
-            { path: 'reports/outward', component: OutwardReport },
-            { path: 'reports/movement', component: MovementReport },
-            { path: 'reports/aging', component: AgingReport },
+// Project Execution & Monitoring
+{ path: 'project-execution/work-order-management', component: WorkOrderManagement },
+{ path: 'project-execution/progress-monitoring', component: ProgressMonitoring },
+{ path: 'project-execution/e-measurement-book', component: EMeasurementBook },
+{ path: 'project-execution/e-billing', component: EBilling },
 
-            // Administration
-            { path: 'admin/users', component: Users },
-            { path: 'admin/roles', component: Roles },
-            { path: 'admin/settings', component: Settings },
-            { path: 'admin/audit-logs', component: AuditLogs }
+            // Reports & Analytics
+            { path: 'reports/project-reports', component: StockReport },
+            { path: 'reports/financial-reports', component: InwardReport },
+            { path: 'reports/progress-reports', component: OutwardReport },
+            { path: 'reports/contractor-performance', component: MovementReport },
+            { path: 'reports/compliance-reports', component: AgingReport },
+
+            // System Administration
+            { path: 'admin/user-management', component: Users },
+            { path: 'admin/roles-permissions', component: Roles },
+            { path: 'admin/system-settings', component: Settings },
+            { path: 'admin/audit-trail', component: AuditLogs }
         ]
     },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+    { path: '**', redirectTo: '/home' }
 ];

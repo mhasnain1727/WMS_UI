@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { PlaceholderPage } from '../../shared/components/placeholder-page';
 
 @Component({
-    selector: 'app-stock-transfer',
+    selector: 'app-e-billing',
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Stock Transfer"
-        description="Transfer stock between warehouses and locations. Track inter-warehouse movements."
-        icon="pi-arrows-h">
+        title="E-Billing"
+        description="Electronic billing system for contractor payments, progress claims, and financial settlements."
+        icon="pi-money-bill">
     </app-placeholder-page>`
 })
-export class StockTransfer {}
+export class EBilling {}

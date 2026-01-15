@@ -6,9 +6,9 @@ import { PlaceholderPage } from '../../shared/components/placeholder-page';
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Aging Report"
-        description="Identify slow-moving and aging inventory for better stock management."
-        icon="pi-clock">
+        title="Compliance Reports"
+        description="Regulatory compliance tracking, audit reports, and quality assurance metrics."
+        icon="pi-shield">
     </app-placeholder-page>`
 })
 export class AgingReport {}

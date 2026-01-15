@@ -45,41 +45,41 @@ interface StatCard {
 export class StatsWidget {
     stats: StatCard[] = [
         {
-            title: 'Total Products',
-            value: '1,284',
-            change: '+12',
-            changeText: 'added this week',
-            icon: 'pi-box',
+            title: 'Active Projects',
+            value: '156',
+            change: '+8',
+            changeText: 'new this month',
+            icon: 'pi-building',
             iconBg: 'bg-blue-100 dark:bg-blue-400/10',
             iconColor: 'text-blue-500',
             changeColor: 'text-primary'
         },
         {
-            title: 'Total Stock',
-            value: '45,230',
-            change: '+8.5%',
-            changeText: 'from last month',
-            icon: 'pi-warehouse',
-            iconBg: 'bg-green-100 dark:bg-green-400/10',
-            iconColor: 'text-green-500',
-            changeColor: 'text-green-500'
-        },
-        {
-            title: 'Pending Inward',
-            value: '28',
+            title: 'Pending Approvals',
+            value: '23',
             change: '5 urgent',
             changeText: 'need attention',
-            icon: 'pi-sign-in',
+            icon: 'pi-file-text',
             iconBg: 'bg-orange-100 dark:bg-orange-400/10',
             iconColor: 'text-orange-500',
             changeColor: 'text-orange-500'
         },
         {
-            title: 'Pending Outward',
-            value: '43',
-            change: '12 ready',
-            changeText: 'for dispatch',
-            icon: 'pi-sign-out',
+            title: 'Ongoing Contracts',
+            value: '89',
+            change: '+12%',
+            changeText: 'from last quarter',
+            icon: 'pi-briefcase',
+            iconBg: 'bg-green-100 dark:bg-green-400/10',
+            iconColor: 'text-green-500',
+            changeColor: 'text-green-500'
+        },
+        {
+            title: 'Completed This Month',
+            value: '34',
+            change: '18 ahead',
+            changeText: 'of schedule',
+            icon: 'pi-check-circle',
             iconBg: 'bg-cyan-100 dark:bg-cyan-400/10',
             iconColor: 'text-cyan-500',
             changeColor: 'text-cyan-500'

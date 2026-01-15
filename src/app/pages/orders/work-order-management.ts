@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PlaceholderPage } from '../../shared/components/placeholder-page';
 
 @Component({
-    selector: 'app-purchase-orders',
+    selector: 'app-work-order-management',
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
@@ -11,4 +11,4 @@ import { PlaceholderPage } from '../../shared/components/placeholder-page';
         icon="pi-play-circle">
     </app-placeholder-page>`
 })
-export class PurchaseOrders {}
+export class WorkOrderManagement {}

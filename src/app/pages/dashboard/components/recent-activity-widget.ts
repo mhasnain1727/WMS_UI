@@ -4,7 +4,7 @@ import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 
 interface ActivityItem {
-    type: 'inward' | 'outward' | 'transfer' | 'adjustment';
+    type: 'approval' | 'submission' | 'completion' | 'contract';
     description: string;
     user: string;
     time: string;
@@ -43,43 +43,43 @@ interface ActivityItem {
 export class RecentActivityWidget {
     activities: ActivityItem[] = [
         {
-            type: 'inward',
-            description: 'GRN-2024-0145 received - 500 units',
-            user: 'John Doe',
+            type: 'approval',
+            description: 'Technical Sanction approved for PROJ-2024-001',
+            user: 'Superintending Engineer',
             time: '10 min ago',
-            icon: 'pi pi-sign-in',
+            icon: 'pi pi-check-circle',
             color: '#22c55e'
         },
         {
-            type: 'outward',
-            description: 'DC-2024-0892 dispatched to Customer A',
-            user: 'Jane Smith',
+            type: 'submission',
+            description: 'Estimate submitted for Bridge Repair Project',
+            user: 'Executive Engineer',
             time: '25 min ago',
-            icon: 'pi pi-sign-out',
+            icon: 'pi pi-file-text',
             color: '#3b82f6'
         },
         {
-            type: 'transfer',
-            description: 'Stock transferred: Main WH → Branch WH',
-            user: 'Mike Wilson',
+            type: 'contract',
+            description: 'Work Order issued for Road Construction NH-45',
+            user: 'Deputy Engineer',
             time: '1 hour ago',
-            icon: 'pi pi-arrows-h',
+            icon: 'pi pi-briefcase',
             color: '#f59e0b'
         },
         {
-            type: 'adjustment',
-            description: 'Stock adjustment: PRD-045 (+20 units)',
-            user: 'Sarah Johnson',
+            type: 'completion',
+            description: 'Measurement Book updated for PROJ-2024-023',
+            user: 'Junior Engineer',
             time: '2 hours ago',
-            icon: 'pi pi-sliders-h',
+            icon: 'pi pi-book',
             color: '#8b5cf6'
         },
         {
-            type: 'inward',
-            description: 'GRN-2024-0144 received - 1200 units',
-            user: 'John Doe',
+            type: 'approval',
+            description: 'Tender evaluation completed for Water Supply Project',
+            user: 'Superintending Engineer',
             time: '3 hours ago',
-            icon: 'pi pi-sign-in',
+            icon: 'pi pi-check-circle',
             color: '#22c55e'
         }
     ];

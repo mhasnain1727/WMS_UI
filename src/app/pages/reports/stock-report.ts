@@ -6,8 +6,8 @@ import { PlaceholderPage } from '../../shared/components/placeholder-page';
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Stock Report"
-        description="View current stock levels across all warehouses and locations."
+        title="Project Reports"
+        description="Comprehensive project status reports, timelines, and performance analytics."
         icon="pi-chart-bar">
     </app-placeholder-page>`
 })

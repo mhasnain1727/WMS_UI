@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { PlaceholderPage } from '../../shared/components/placeholder-page';
 
 @Component({
-    selector: 'app-suppliers',
+    selector: 'app-bid-evaluation',
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Suppliers"
-        description="Manage supplier information, contact details, and purchase history."
-        icon="pi-truck">
+        title="Bid Evaluation"
+        description="Evaluate contractor bids, perform technical and financial analysis, and recommend awards."
+        icon="pi-search">
     </app-placeholder-page>`
 })
-export class Suppliers {}
+export class BidEvaluation {}

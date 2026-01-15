@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { PlaceholderPage } from '../../shared/components/placeholder-page';
 
 @Component({
-    selector: 'app-outward-report',
+    selector: 'app-warehouses',
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Progress Reports"
-        description="Project milestone tracking, completion status, and progress analytics."
-        icon="pi-chart-pie">
+        title="Divisions"
+        description="Manage organizational divisions and their hierarchical structure."
+        icon="pi-sitemap">
     </app-placeholder-page>`
 })
-export class OutwardReport {}
+export class Warehouses {}

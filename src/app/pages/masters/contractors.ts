@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { PlaceholderPage } from '../../shared/components/placeholder-page';
 
 @Component({
-    selector: 'app-stock-adjustment',
+    selector: 'app-categories',
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Stock Adjustment"
-        description="Adjust stock quantities for discrepancies, damages, or other corrections."
-        icon="pi-sliders-h">
+        title="Contractors"
+        description="Manage contractor registration, classification, and performance tracking."
+        icon="pi-users">
     </app-placeholder-page>`
 })
-export class StockAdjustment {}
+export class Categories {}

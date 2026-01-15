@@ -6,12 +6,12 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     standalone: true,
-    selector: 'app-stock-movement-widget',
+    selector: 'app-project-expenditure-widget',
     imports: [CommonModule, ChartModule, SelectModule, FormsModule],
     template: `
         <div class="card h-full">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div class="font-semibold text-xl">Stock Movement</div>
+                <div class="font-semibold text-xl">Project Expenditure</div>
                 <p-select
                     [options]="periods"
                     [(ngModel)]="selectedPeriod"
@@ -27,15 +27,15 @@ import { FormsModule } from '@angular/forms';
         </div>
     `
 })
-export class StockMovementWidget implements OnInit {
+export class ProjectExpenditureWidget implements OnInit {
     chartData: any;
     chartOptions: any;
-    selectedPeriod = 'week';
+    selectedPeriod = 'month';
     platformId = inject(PLATFORM_ID);
 
     periods = [
-        { label: 'This Week', value: 'week' },
         { label: 'This Month', value: 'month' },
+        { label: 'This Quarter', value: 'quarter' },
         { label: 'This Year', value: 'year' }
     ];
 
@@ -50,23 +50,23 @@ export class StockMovementWidget implements OnInit {
         const surfaceBorder = documentStyle?.getPropertyValue('--surface-border') || '#dfe7ef';
 
         this.chartData = {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             datasets: [
                 {
-                    label: 'Inward',
+                    label: 'Budgeted',
                     backgroundColor: '#22c55e',
                     borderRadius: 6,
                     barThickness: 'flex',
                     maxBarThickness: 32,
-                    data: [450, 320, 540, 280, 620, 180, 90]
+                    data: [2500000, 3200000, 2800000, 3500000, 2900000, 3800000]
                 },
                 {
-                    label: 'Outward',
+                    label: 'Actual',
                     backgroundColor: '#3b82f6',
                     borderRadius: 6,
                     barThickness: 'flex',
                     maxBarThickness: 32,
-                    data: [380, 450, 320, 490, 380, 220, 120]
+                    data: [2400000, 3100000, 2950000, 3400000, 2750000, 3650000]
                 }
             ]
         };

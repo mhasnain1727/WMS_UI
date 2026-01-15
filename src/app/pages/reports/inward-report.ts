@@ -6,8 +6,8 @@ import { PlaceholderPage } from '../../shared/components/placeholder-page';
     standalone: true,
     imports: [PlaceholderPage],
     template: `<app-placeholder-page
-        title="Inward Report"
-        description="Analyze goods received notes and inward transaction history."
+        title="Financial Reports"
+        description="Budget vs actual expenditure, payment tracking, and financial performance analysis."
         icon="pi-chart-line">
     </app-placeholder-page>`
 })

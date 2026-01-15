@@ -4,46 +4,47 @@ import { ChartModule } from 'primeng/chart';
 
 @Component({
     standalone: true,
-    selector: 'app-warehouse-stock-widget',
+    selector: 'app-project-status-widget',
     imports: [CommonModule, ChartModule],
     template: `
         <div class="card h-full">
-            <div class="font-semibold text-xl mb-6">Stock by Warehouse</div>
+            <div class="font-semibold text-xl mb-6">Projects by Status</div>
             <div class="flex justify-center" style="min-height: 200px;">
                 <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" class="w-full max-w-64"></p-chart>
             </div>
             <div class="flex flex-col gap-4 mt-6">
-                @for (item of warehouseData; track item.name) {
+                @for (item of projectData; track item.name) {
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full shrink-0" [style.backgroundColor]="item.color"></span>
                             <span class="font-medium text-sm">{{ item.name }}</span>
                         </div>
-                        <span class="text-muted-color text-sm font-medium">{{ item.value | number }} units</span>
+                        <span class="text-muted-color text-sm font-medium">{{ item.value | number }} projects</span>
                     </div>
                 }
             </div>
         </div>
     `
 })
-export class WarehouseStockWidget implements OnInit {
+export class ProjectStatusWidget implements OnInit {
     chartData: any;
     chartOptions: any;
 
-    warehouseData = [
-        { name: 'Main Warehouse', value: 25400, color: '#3b82f6' },
-        { name: 'Branch Warehouse A', value: 12300, color: '#22c55e' },
-        { name: 'Branch Warehouse B', value: 7530, color: '#f59e0b' }
+    projectData = [
+        { name: 'Planning', value: 45, color: '#3b82f6' },
+        { name: 'In Progress', value: 67, color: '#22c55e' },
+        { name: 'Completed', value: 23, color: '#f59e0b' },
+        { name: 'On Hold', value: 12, color: '#ef4444' }
     ];
 
     ngOnInit() {
         this.chartData = {
-            labels: this.warehouseData.map(w => w.name),
+            labels: this.projectData.map(p => p.name),
             datasets: [
                 {
-                    data: this.warehouseData.map(w => w.value),
-                    backgroundColor: this.warehouseData.map(w => w.color),
-                    hoverBackgroundColor: this.warehouseData.map(w => w.color + 'dd'),
+                    data: this.projectData.map(p => p.value),
+                    backgroundColor: this.projectData.map(p => p.color),
+                    hoverBackgroundColor: this.projectData.map(p => p.color + 'dd'),
                     borderWidth: 0
                 }
             ]

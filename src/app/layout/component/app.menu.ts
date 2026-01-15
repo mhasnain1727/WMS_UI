@@ -25,52 +25,58 @@ export class AppMenu {
                 items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }]
             },
             {
-                label: 'Warehouse Operations',
+                label: 'Project Planning',
                 items: [
-                    { label: 'Inventory', icon: 'pi pi-fw pi-box', routerLink: ['/inventory'] },
-                    { label: 'Inward', icon: 'pi pi-fw pi-sign-in', routerLink: ['/inward'] },
-                    { label: 'Outward', icon: 'pi pi-fw pi-sign-out', routerLink: ['/outward'] },
-                    { label: 'Stock Transfer', icon: 'pi pi-fw pi-arrows-h', routerLink: ['/stock-transfer'] },
-                    { label: 'Stock Adjustment', icon: 'pi pi-fw pi-sliders-h', routerLink: ['/stock-adjustment'] }
+                    { label: 'Estimate Preparation', icon: 'pi pi-fw pi-calculator', routerLink: ['/project-planning/estimate-preparation'] },
+                    { label: 'Technical Sanctions', icon: 'pi pi-fw pi-check-circle', routerLink: ['/project-planning/technical-sanctions'] },
+                    { label: 'Draft Tender Papers', icon: 'pi pi-fw pi-file-edit', routerLink: ['/project-planning/draft-tender-papers'] }
                 ]
             },
             {
-                label: 'Master Data',
+                label: 'Master Data Management',
                 items: [
-                    { label: 'Products', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/masters/products'] },
-                    { label: 'Categories', icon: 'pi pi-fw pi-tags', routerLink: ['/masters/categories'] },
-                    { label: 'Warehouses', icon: 'pi pi-fw pi-building', routerLink: ['/masters/warehouses'] },
-                    { label: 'Locations', icon: 'pi pi-fw pi-map-marker', routerLink: ['/masters/locations'] },
-                    { label: 'Suppliers', icon: 'pi pi-fw pi-truck', routerLink: ['/masters/suppliers'] },
-                    { label: 'Customers', icon: 'pi pi-fw pi-users', routerLink: ['/masters/customers'] },
-                    { label: 'Units of Measure', icon: 'pi pi-fw pi-calculator', routerLink: ['/masters/uom'] }
+                    { label: 'Projects', icon: 'pi pi-fw pi-building', routerLink: ['/masters/projects'] },
+                    { label: 'Contractors', icon: 'pi pi-fw pi-users', routerLink: ['/masters/contractors'] },
+                    { label: 'Divisions', icon: 'pi pi-fw pi-sitemap', routerLink: ['/masters/divisions'] },
+                    { label: 'Work Categories', icon: 'pi pi-fw pi-tags', routerLink: ['/masters/work-categories'] },
+                    { label: 'Materials', icon: 'pi pi-fw pi-box', routerLink: ['/masters/materials'] },
+                    { label: 'Rate Analysis', icon: 'pi pi-fw pi-chart-line', routerLink: ['/masters/rate-analysis'] }
                 ]
             },
             {
-                label: 'Orders',
+                label: 'Tender & Contract Management',
                 items: [
-                    { label: 'Purchase Orders', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/orders/purchase'] },
-                    { label: 'Sales Orders', icon: 'pi pi-fw pi-file-export', routerLink: ['/orders/sales'] },
-                    { label: 'Return Orders', icon: 'pi pi-fw pi-replay', routerLink: ['/orders/returns'] }
+                    { label: 'Tender Creation', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/tender-management/tender-creation'] },
+                    { label: 'Bid Evaluation', icon: 'pi pi-fw pi-search', routerLink: ['/tender-management/bid-evaluation'] },
+                    { label: 'Contract Award', icon: 'pi pi-fw pi-briefcase', routerLink: ['/tender-management/contract-award'] }
                 ]
             },
             {
-                label: 'Reports',
+                label: 'Project Execution & Monitoring',
                 items: [
-                    { label: 'Stock Report', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/reports/stock'] },
-                    { label: 'Inward Report', icon: 'pi pi-fw pi-chart-line', routerLink: ['/reports/inward'] },
-                    { label: 'Outward Report', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/reports/outward'] },
-                    { label: 'Movement Report', icon: 'pi pi-fw pi-history', routerLink: ['/reports/movement'] },
-                    { label: 'Aging Report', icon: 'pi pi-fw pi-clock', routerLink: ['/reports/aging'] }
+                    { label: 'Work Order Management', icon: 'pi pi-fw pi-play-circle', routerLink: ['/project-execution/work-order-management'] },
+                    { label: 'Progress Monitoring', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/project-execution/progress-monitoring'] },
+                    { label: 'E-Measurement Book', icon: 'pi pi-fw pi-book', routerLink: ['/project-execution/e-measurement-book'] },
+                    { label: 'E-Billing', icon: 'pi pi-fw pi-money-bill', routerLink: ['/project-execution/e-billing'] }
                 ]
             },
             {
-                label: 'Administration',
+                label: 'Reports & Analytics',
                 items: [
-                    { label: 'Users', icon: 'pi pi-fw pi-user', routerLink: ['/admin/users'] },
-                    { label: 'Roles & Permissions', icon: 'pi pi-fw pi-lock', routerLink: ['/admin/roles'] },
-                    { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/admin/settings'] },
-                    { label: 'Audit Logs', icon: 'pi pi-fw pi-list', routerLink: ['/admin/audit-logs'] }
+                    { label: 'Project Reports', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/reports/project-reports'] },
+                    { label: 'Financial Reports', icon: 'pi pi-fw pi-chart-line', routerLink: ['/reports/financial-reports'] },
+                    { label: 'Progress Reports', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/reports/progress-reports'] },
+                    { label: 'Contractor Performance', icon: 'pi pi-fw pi-star', routerLink: ['/reports/contractor-performance'] },
+                    { label: 'Compliance Reports', icon: 'pi pi-fw pi-shield', routerLink: ['/reports/compliance-reports'] }
+                ]
+            },
+            {
+                label: 'System Administration',
+                items: [
+                    { label: 'User Management', icon: 'pi pi-fw pi-user', routerLink: ['/admin/user-management'] },
+                    { label: 'Roles & Permissions', icon: 'pi pi-fw pi-lock', routerLink: ['/admin/roles-permissions'] },
+                    { label: 'System Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/admin/system-settings'] },
+                    { label: 'Audit Trail', icon: 'pi pi-fw pi-list', routerLink: ['/admin/audit-trail'] }
                 ]
             }
         ];
