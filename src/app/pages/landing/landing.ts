@@ -10,6 +10,8 @@ interface ModuleInfo {
     title: string;
     description: string;
     details: string[];
+    icon?: string;
+    shortDescription?: string;
 }
 
 @Component({
@@ -17,91 +19,328 @@ interface ModuleInfo {
     standalone: true,
     imports: [RouterModule, ButtonModule, DialogModule, RippleModule, CommonModule],
     template: `
-        <div class="bg-surface-0 dark:bg-surface-900 min-h-screen">
-            <!-- Header with Login Button -->
-            <div class="bg-surface-50 dark:bg-surface-800 border-b border-surface-200 dark:border-surface-700">
-                <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <div class="flex items-center gap-3">
-                        <i class="pi pi-box text-3xl text-primary"></i>
-                        <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">Work Management System</h1>
+        <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-surface-900 dark:via-surface-950 dark:to-surface-900 min-h-screen">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-5 dark:opacity-10">
+                    <div class="absolute top-20 left-20">
+                        <i class="pi pi-building text-9xl text-primary"></i>
                     </div>
-                    <p-button label="Login" icon="pi pi-sign-in" routerLink="/auth/login" [outlined]="true"></p-button>
+                    <div class="absolute top-40 right-32">
+                        <i class="pi pi-chart-line text-7xl text-primary-400"></i>
+                    </div>
+                    <div class="absolute bottom-32 left-40">
+                        <i class="pi pi-users text-8xl text-primary-300"></i>
+                    </div>
+                    <div class="absolute bottom-20 right-20">
+                        <i class="pi pi-file-text text-6xl text-primary-500"></i>
+                    </div>
+                </div>
+
+                <!-- Header -->
+                <div class="relative bg-white/80 dark:bg-surface-900/80 backdrop-blur-sm border-b border-white/20 dark:border-surface-700/50">
+                    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-primary-600 rounded-xl flex items-center justify-center shadow-lg">
+                                <i class="pi pi-building text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent">Work Management System</h1>
+                                <p class="text-xs text-surface-600 dark:text-surface-400">Infrastructure Management Portal</p>
+                            </div>
+                        </div>
+                        <p-button label="Login" icon="pi pi-sign-in" routerLink="/auth/login" styleClass="bg-gradient-to-r from-primary to-primary-600 border-none shadow-lg hover:shadow-xl transition-all duration-300"></p-button>
+                    </div>
+                </div>
+
+                <!-- Hero Content -->
+                <div class="relative container mx-auto px-4 py-16 lg:py-24">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <div class="inline-flex items-center px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-6 border border-primary/20">
+                            <i class="pi pi-star-fill text-primary mr-2"></i>
+                            <span class="text-sm font-medium text-primary">Comprehensive Infrastructure Management</span>
+                        </div>
+
+                        <h1 class="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
+                            Transform Infrastructure<br>Project Management
+                        </h1>
+
+                        <p class="text-xl text-surface-600 dark:text-surface-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                            Streamline your department's workflow with our integrated Work Management System. From estimate preparation to project completion, manage every aspect of infrastructure development efficiently.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                            <p-button label="Explore Modules" icon="pi pi-arrow-down" routerLink="#modules" styleClass="bg-gradient-to-r from-primary to-primary-600 border-none shadow-lg hover:shadow-xl px-8 py-3 text-lg"></p-button>
+                            <p-button label="Get Started" icon="pi pi-play" routerLink="/auth/login" [outlined]="true" styleClass="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 text-lg"></p-button>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+                            <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
+                                <div class="text-2xl font-bold text-primary mb-1">10</div>
+                                <div class="text-sm text-surface-600 dark:text-surface-400">Core Modules</div>
+                            </div>
+                            <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
+                                <div class="text-2xl font-bold text-primary mb-1">100+</div>
+                                <div class="text-sm text-surface-600 dark:text-surface-400">Features</div>
+                            </div>
+                            <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
+                                <div class="text-2xl font-bold text-primary mb-1">24/7</div>
+                                <div class="text-sm text-surface-600 dark:text-surface-400">Support</div>
+                            </div>
+                            <div class="bg-white/60 dark:bg-surface-800/60 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20 dark:border-surface-700/50">
+                                <div class="text-2xl font-bold text-primary mb-1">SSL</div>
+                                <div class="text-sm text-surface-600 dark:text-surface-400">Secured</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Main Content -->
-            <div class="container mx-auto px-4 py-8">
+            <div class="container mx-auto px-4 py-16" id="modules">
                 <!-- Introduction Section -->
-                <div class="card mb-8">
-                    <h2 class="text-3xl font-bold mb-4 text-surface-900 dark:text-surface-0">Scope of Work and Their Acceptance</h2>
-                    
-                    <h3 class="text-2xl font-semibold mt-6 mb-3 text-surface-900 dark:text-surface-0">INTRODUCTION</h3>
-                    <p class="text-surface-700 dark:text-surface-300 mb-4 leading-relaxed">
-                        Department is entrusted with the planning, design, construction, operation, and maintenance of various types of infrastructure projects under irrigation schemes. Every year, department invites numerous tenders for infrastructure development works, which are executed through registered contractors.
-                    </p>
-                    <p class="text-surface-700 dark:text-surface-300 mb-4 leading-relaxed">
-                        For execution of any project, it is required to prepare an estimate of work and go through various checks till final approval. All these procedures are presently done as per Works Manual and Account Code. Main activities are estimating preparation in e-format and approval process till generation of DTP. In addition to these, higher authorities frequently require lot of information for Monitoring progress of project for policy formation process.
-                    </p>
-                    <p class="text-surface-700 dark:text-surface-300 mb-4 leading-relaxed">
-                        Currently all these activities are performed manually in the conventional manner which is a time-consuming activity. The huge amount of time and human efforts are invested in manual environment which may in delays at different stages of project or may induce human mistakes which may directly either impact the entire project life cycle or lead to incorrect reporting. Ultimately the systems covered under Work Management System increase the overall efficiency of the department delivery process in its attempt to provide the best infrastructure facilities to its citizens of the state.
-                    </p>
-                    <p class="text-surface-700 dark:text-surface-300 leading-relaxed">
-                        With this intent, this proposal is prepared to develop and deploy an integrated System for the department. The details of the various systems and modules along with the brief commercials involved are provided in this proposal.
-                    </p>
+                <div class="max-w-6xl mx-auto mb-16">
+                    <div class="bg-white dark:bg-surface-800 rounded-2xl shadow-xl border border-surface-200 dark:border-surface-700 overflow-hidden">
+                        <div class="bg-gradient-to-r from-primary to-primary-600 p-6 text-white">
+                            <h2 class="text-3xl font-bold mb-2">Scope of Work and Their Acceptance</h2>
+                            <p class="text-primary-100">Comprehensive system overview and module specifications</p>
+                        </div>
 
-                    <h3 class="text-2xl font-semibold mt-8 mb-4 text-surface-900 dark:text-surface-0">MODULES AND THEIR FUNCTIONAL REQUIREMENTS</h3>
+                        <div class="p-8">
+                            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="pi pi-building text-3xl text-primary"></i>
+                                    </div>
+                                    <h3 class="font-semibold text-lg mb-2">Planning & Design</h3>
+                                    <p class="text-sm text-surface-600 dark:text-surface-400">Infrastructure project planning and design management</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="pi pi-users text-3xl text-primary"></i>
+                                    </div>
+                                    <h3 class="font-semibold text-lg mb-2">Contract Management</h3>
+                                    <p class="text-sm text-surface-600 dark:text-surface-400">Contractor registration and tender management</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="pi pi-chart-line text-3xl text-primary"></i>
+                                    </div>
+                                    <h3 class="font-semibold text-lg mb-2">Progress Monitoring</h3>
+                                    <p class="text-sm text-surface-600 dark:text-surface-400">Real-time project monitoring and reporting</p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-2xl font-semibold mt-8 mb-6 text-surface-900 dark:text-surface-0 flex items-center">
+                                <i class="pi pi-info-circle text-primary mr-3"></i>
+                                INTRODUCTION
+                            </h3>
+
+                            <div class="space-y-6 text-surface-700 dark:text-surface-300 leading-relaxed">
+                                <p class="text-lg">
+                                    Department is entrusted with the planning, design, construction, operation, and maintenance of various types of infrastructure projects under irrigation schemes. Every year, department invites numerous tenders for infrastructure development works, which are executed through registered contractors.
+                                </p>
+                                <p class="text-lg">
+                                    For execution of any project, it is required to prepare an estimate of work and go through various checks till final approval. All these procedures are presently done as per Works Manual and Account Code. Main activities are estimating preparation in e-format and approval process till generation of DTP. In addition to these, higher authorities frequently require lot of information for Monitoring progress of project for policy formation process.
+                                </p>
+                                <p class="text-lg">
+                                    Currently all these activities are performed manually in the conventional manner which is a time-consuming activity. The huge amount of time and human efforts are invested in manual environment which may in delays at different stages of project or may induce human mistakes which may directly either impact the entire project life cycle or lead to incorrect reporting. Ultimately the systems covered under Work Management System increase the overall efficiency of the department delivery process in its attempt to provide the best infrastructure facilities to its citizens of the state.
+                                </p>
+                                <p class="text-lg">
+                                    With this intent, this proposal is prepared to develop and deploy an integrated System for the department. The details of the various systems and modules along with the brief commercials involved are provided in this proposal.
+                                </p>
+                            </div>
+
+                            <div class="mt-12 p-6 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl border border-primary/20">
+                                <h3 class="text-2xl font-semibold mb-4 text-surface-900 dark:text-surface-0 flex items-center">
+                                    <i class="pi pi-list text-primary mr-3"></i>
+                                    MODULES AND THEIR FUNCTIONAL REQUIREMENTS
+                                </h3>
+                                <p class="text-surface-600 dark:text-surface-400">
+                                    Explore our comprehensive suite of 10 specialized modules designed to streamline every aspect of infrastructure project management.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Modules Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <div 
-                        *ngFor="let module of modules" 
-                        class="card cursor-pointer hover:shadow-lg transition-all duration-300 border-2 border-surface-200 dark:border-surface-700 hover:border-primary"
-                        (click)="openModuleDialog(module)"
-                        pRipple
-                    >
-                        <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-center p-4">
-                            <div class="mb-4">
-                                <div class="w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900 flex items-center justify-center mb-4 mx-auto">
-                                    <i [class]="module.icon" class="text-3xl text-primary"></i>
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold mb-4 bg-gradient-to-r from-surface-900 to-primary dark:from-white dark:to-primary-300 bg-clip-text text-transparent">
+                            System Modules
+                        </h2>
+                        <p class="text-lg text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+                            Discover our comprehensive suite of specialized modules designed to transform your infrastructure management workflow
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div
+                            *ngFor="let module of modules; let i = index"
+                            class="group bg-white dark:bg-surface-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-surface-200 dark:border-surface-700 hover:border-primary overflow-hidden cursor-pointer transform hover:-translate-y-2"
+                            (click)="openModuleDialog(module)"
+                            pRipple
+                        >
+                            <div class="relative p-6 h-full flex flex-col">
+                                <!-- Module Number Badge -->
+                                <div class="absolute top-4 right-4 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-bold text-primary">{{ i + 1 }}</span>
                                 </div>
+
+                                <!-- Icon -->
+                                <div class="mb-6">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 dark:from-primary/30 dark:to-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                        <i [class]="module.icon" class="text-4xl text-primary"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Content -->
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold mb-3 text-surface-900 dark:text-surface-0 group-hover:text-primary transition-colors duration-300">
+                                        {{ module.title.split(':')[1] || module.title }}
+                                    </h4>
+                                    <p class="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-4">
+                                        {{ module.shortDescription }}
+                                    </p>
+                                </div>
+
+                                <!-- Action -->
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                                        View Details
+                                    </span>
+                                    <i class="pi pi-arrow-right text-primary group-hover:translate-x-1 transition-transform duration-300"></i>
+                                </div>
+
+                                <!-- Hover Effect Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                             </div>
-                            <h4 class="text-xl font-bold mb-2 text-surface-900 dark:text-surface-0">{{ module.title }}</h4>
-                            <p class="text-sm text-muted-color">{{ module.shortDescription }}</p>
-                            <p-button label="View Details" [text]="true" icon="pi pi-arrow-right" iconPos="right" class="mt-4"></p-button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="bg-surface-50 dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 mt-12">
-                <div class="container mx-auto px-4 py-6 text-center text-surface-600 dark:text-surface-400">
-                    <p>&copy; 2024 Work Management System. All rights reserved.</p>
+            <div class="bg-gradient-to-r from-surface-900 to-surface-800 dark:from-surface-950 dark:to-surface-900 border-t border-surface-700/50 mt-20">
+                <div class="container mx-auto px-4 py-12">
+                    <div class="grid md:grid-cols-4 gap-8 mb-8">
+                        <div class="md:col-span-2">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-r from-primary to-primary-600 rounded-xl flex items-center justify-center">
+                                    <i class="pi pi-building text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Work Management System</h3>
+                                    <p class="text-surface-400 text-sm">Infrastructure Management Portal</p>
+                                </div>
+                            </div>
+                            <p class="text-surface-300 mb-4 leading-relaxed">
+                                Transforming infrastructure project management with innovative digital solutions for efficient, transparent, and sustainable development.
+                            </p>
+                            <div class="flex space-x-4">
+                                <div class="w-10 h-10 bg-surface-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300 cursor-pointer">
+                                    <i class="pi pi-shield text-surface-300"></i>
+                                </div>
+                                <div class="w-10 h-10 bg-surface-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300 cursor-pointer">
+                                    <i class="pi pi-lock text-surface-300"></i>
+                                </div>
+                                <div class="w-10 h-10 bg-surface-700 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300 cursor-pointer">
+                                    <i class="pi pi-mobile text-surface-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                            <ul class="space-y-2">
+                                <li><a href="#modules" class="text-surface-300 hover:text-primary transition-colors duration-300">System Modules</a></li>
+                                <li><a routerLink="/auth/login" class="text-surface-300 hover:text-primary transition-colors duration-300">Login Portal</a></li>
+                                <li><a href="#modules" class="text-surface-300 hover:text-primary transition-colors duration-300">Documentation</a></li>
+                                <li><a href="#modules" class="text-surface-300 hover:text-primary transition-colors duration-300">Support</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-4">Contact</h4>
+                            <ul class="space-y-2 text-surface-300">
+                                <li class="flex items-center">
+                                    <i class="pi pi-envelope mr-2 text-primary"></i>
+                                    <span>support@wms.gov.in</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="pi pi-phone mr-2 text-primary"></i>
+                                    <span>1800-XXX-XXXX</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="pi pi-clock mr-2 text-primary"></i>
+                                    <span>24/7 Support</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-surface-700/50 pt-8 text-center">
+                        <p class="text-surface-400">&copy; 2026 Work Management System. All rights reserved.</p>
+                        <div class="flex justify-center items-center mt-4 space-x-6 text-sm text-surface-500">
+                            <span>SSL Secured</span>
+                            <span>•</span>
+                            <span>Government Portal</span>
+                            <span>•</span>
+                            <span>ISO Certified</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Module Details Dialog -->
-            <p-dialog 
-                [(visible)]="displayDialog" 
-                [header]="selectedModule?.title" 
-                [modal]="true" 
-                [style]="{width: '90vw', maxWidth: '900px'}"
+            <p-dialog
+                [(visible)]="displayDialog"
+                [header]="selectedModule?.title"
+                [modal]="true"
+                [style]="{width: '95vw', maxWidth: '1000px'}"
                 [closable]="true"
                 [draggable]="false"
                 [blockScroll]="true"
+                styleClass="module-dialog"
             >
-                <div *ngIf="selectedModule" class="module-details" style="max-height: 70vh; overflow-y: auto;">
-                    <p class="text-surface-700 dark:text-surface-300 mb-4 leading-relaxed">{{ selectedModule.description }}</p>
-                    <div class="mt-4">
-                        <h4 class="font-semibold text-lg mb-3 text-surface-900 dark:text-surface-0">Functional Requirements:</h4>
-                        <ul class="list-none p-0">
-                            <li *ngFor="let detail of selectedModule.details; let i = index" class="mb-3 flex items-start">
-                                <i class="pi pi-check-circle text-primary mr-3 mt-1 flex-shrink-0"></i>
-                                <span class="text-surface-700 dark:text-surface-300 leading-relaxed">{{ i + 1 }}. {{ detail }}</span>
-                            </li>
-                        </ul>
-            </div>
+                <div *ngIf="selectedModule" class="module-details">
+                    <!-- Header Section -->
+                    <div class="bg-gradient-to-r from-primary/10 to-primary/5 p-6 rounded-xl mb-6 border border-primary/20">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary-600 rounded-xl flex items-center justify-center mr-4">
+                                <i [class]="selectedModule.icon" class="text-3xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 mb-1">
+                                    {{ selectedModule.title.split(':')[1] || selectedModule.title }}
+                                </h3>
+                                <p class="text-primary font-medium">{{ selectedModule.shortDescription }}</p>
+                            </div>
+                        </div>
+                        <p class="text-surface-700 dark:text-surface-300 leading-relaxed text-lg">
+                            {{ selectedModule.description }}
+                        </p>
+                    </div>
+
+                    <!-- Functional Requirements -->
+                    <div class="bg-surface-50 dark:bg-surface-800/50 rounded-xl p-6">
+                        <h4 class="font-bold text-xl mb-6 text-surface-900 dark:text-surface-0 flex items-center">
+                            <i class="pi pi-check-circle text-primary mr-3"></i>
+                            Functional Requirements
+                        </h4>
+                        <div class="grid gap-3">
+                            <div *ngFor="let detail of selectedModule.details; let i = index"
+                                 class="flex items-start p-4 bg-white dark:bg-surface-800 rounded-lg border border-surface-200 dark:border-surface-700 hover:border-primary/50 transition-colors duration-300">
+                                <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-0.5">
+                                    <span class="text-sm font-bold text-primary">{{ i + 1 }}</span>
+                                </div>
+                                <span class="text-surface-700 dark:text-surface-300 leading-relaxed flex-1">{{ detail }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </p-dialog>
         </div>
