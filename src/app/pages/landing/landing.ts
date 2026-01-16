@@ -46,8 +46,8 @@ interface ModuleInfo {
                                 <i class="pi pi-building text-white text-xl"></i>
                             </div>
                             <div>
-                                <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent">Work Management System</h1>
-                                <p class="text-xs text-surface-600 dark:text-surface-400">Infrastructure Management Portal</p>
+                                <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent">Work Management & Integrated System</h1>
+                                <p class="text-xs text-surface-600 dark:text-surface-400">Project Management Portal</p>
                             </div>
                         </div>
                         <p-button label="Login" icon="pi pi-sign-in" routerLink="/auth/login" styleClass="bg-gradient-to-r from-primary to-primary-600 border-none shadow-lg hover:shadow-xl transition-all duration-300"></p-button>
@@ -57,17 +57,20 @@ interface ModuleInfo {
                 <!-- Hero Content -->
                 <div class="relative container mx-auto px-4 py-8 lg:py-12">
                     <div class="max-w-4xl mx-auto text-center">
-                        <div class="inline-flex items-center px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-3 border border-primary/20">
+                        <!-- <div class="inline-flex items-center px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-full mb-3 border border-primary/20">
                             <i class="pi pi-star-fill text-primary mr-2"></i>
                             <span class="text-sm font-medium text-primary">Comprehensive Infrastructure Management</span>
-                        </div>
+                        </div> -->
 
-                        <h1 class="text-4xl lg:text-6xl font-bold mb-3 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
+                        <!-- <h1 class="text-4xl lg:text-6xl font-bold mb-3 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
                             Transform Infrastructure<br>Project Management
-                        </h1>
+                        </h1> -->
+                        <!-- <h1 class="text-4xl lg:text-6xl font-bold mb-3 bg-gradient-to-r from-surface-900 via-primary to-surface-800 dark:from-white dark:via-primary-300 dark:to-surface-200 bg-clip-text text-transparent leading-tight">
+                            Project Management
+                        </h1> -->
 
                         <p class="text-xl text-surface-600 dark:text-surface-300 mb-4 leading-relaxed">
-                            Streamline your department's workflow with our integrated Work Management System. From estimate preparation to project completion, manage every aspect of infrastructure development efficiently.
+                            Streamline your department's workflow with our Integrated Work Management & integrated System. From planning (skretch plan, detailed estimate, detailed drawing) to project completion, manage every aspect of project development efficiently. This cover all stakeholders information functionalities associated with the project.
                         </p>
 
                         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
