@@ -19,6 +19,7 @@ import { DepartmentPerformanceWidget } from './components/department-performance
         ProjectExpenditureWidget,
         DepartmentPerformanceWidget
     ],
+    
     template: `
         <div class="grid grid-cols-12 gap-6">
             <!-- Stats Cards Row -->

@@ -39,7 +39,9 @@ export class AppMenu {
                     { label: 'Contractors', icon: 'pi pi-fw pi-users', routerLink: ['/masters/contractors'] },
                     { label: 'Divisions', icon: 'pi pi-fw pi-sitemap', routerLink: ['/masters/divisions'] },
                     { label: 'Work Categories', icon: 'pi pi-fw pi-tags', routerLink: ['/masters/work-categories'] },
-                    { label: 'Materials', icon: 'pi pi-fw pi-box', routerLink: ['/masters/materials'] },
+                    { label: 'Machinery', icon: 'pi pi-fw pi-cog', routerLink: ['/masters/machinery'] },
+                    { label: 'Manpower', icon: 'pi pi-fw pi-id-card', routerLink: ['/masters/manpower'] },
+                    { label: 'Equipments', icon: 'pi pi-fw pi-briefcase', routerLink: ['/masters/equipments'] },
                     { label: 'Rate Analysis', icon: 'pi pi-fw pi-chart-line', routerLink: ['/masters/rate-analysis'] }
                 ]
             },

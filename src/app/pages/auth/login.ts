@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -332,49 +332,72 @@ import { AuthService } from '../../core/services/auth.service';
         </div>
     `
 })
-export class Login {
+export class Login implements OnInit {
+
     private authService = inject(AuthService);
     private router = inject(Router);
     private messageService = inject(MessageService);
 
-    username: string = 'admin';
-    password: string = 'password';
+    username: string = '';
+    password: string = '';
     rememberMe: boolean = false;
     loading: boolean = false;
 
-    onSubmit(): void {
-        if (!this.username || !this.password) {
+    ngOnInit(): void {
+        // guest token
+        this.authService.getInitialToken().subscribe({
+        error: () => {
             this.messageService.add({
-                severity: 'warn',
-                summary: 'Validation Error',
-                detail: 'Please enter both username and password',
-                life: 3000
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Unable to initialize login. Please refresh the page.',
+            life: 3000
             });
-            return;
+        }
+        });
+    }
+
+    onSubmit(): void {
+
+        if (!this.username || !this.password) {
+        this.messageService.add({
+            severity: 'warn',
+            summary: 'Validation Error',
+            detail: 'Please enter both username and password',
+            life: 3000
+        });
+        return;
         }
 
         this.loading = true;
+
+        
         this.authService.login(this.username, this.password, this.rememberMe).subscribe({
-            next: () => {
+
+
+        next: () => {
+            this.loading = false;
+
+            this.messageService.add({
+            severity: 'success',
+            summary: 'Login Successful',
+            detail: 'Welcome back!',
+            life: 2000
+            });
+
+            this.router.navigate(['/dashboard']);
+        },
+
+            error: () => {
+                this.loading = false;
                 this.messageService.add({
-                    severity: 'success',
-                    summary: 'Login Successful',
-                    detail: 'Welcome back!',
-                    life: 3000
+                severity: 'error',
+                summary: 'Login Failed',
+                detail: 'Invalid username or password',
+                life: 3000
                 });
-                
-                // Get return URL from route parameters or default to dashboard
-                const queryParams = this.router.parseUrl(this.router.url).queryParams;
-                const returnUrl = queryParams['returnUrl'] || '/dashboard';
-                this.router.navigate([returnUrl]);
-            },
-            error: (error) => {
-                this.loading = false;
-                // Error handling is done by the error interceptor
-            },
-            complete: () => {
-                this.loading = false;
             }
         });
     }
 }
+

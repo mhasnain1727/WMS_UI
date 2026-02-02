@@ -1,186 +1,111 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
 
 export interface User {
-    id: string;
-    username: string;
-    email: string;
-    firstName?: string;
-    lastName?: string;
-    roles?: string[];
-}
-
-export interface LoginResponse {
-    token: string;
-    user: User;
-    refreshToken?: string;
+  id: string;
+  username: string;
+  email: string;
+  roles?: string[];
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthService {
-    private http = inject(HttpClient);
-    private router = inject(Router);
-    
-    private readonly TOKEN_KEY = 'gwms_auth_token';
-    private readonly USER_KEY = 'gwms_user';
-    private readonly API_URL = '/api/auth'; // Update with your API endpoint
 
-    private currentUserSubject = new BehaviorSubject<User | null>(this.getStoredUser());
-    public currentUser$ = this.currentUserSubject.asObservable();
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
-    constructor() {}
+  private readonly TOKEN_KEY = 'gwms_auth_token';
+  private readonly USER_KEY = 'gwms_user';
 
-    /**
-     * Login user
-     * Mock authentication for development - accepts admin/password
-     */
-    login(username: string, password: string, rememberMe: boolean = false): Observable<LoginResponse> {
-        // Mock authentication - check for default credentials
-        if (username === 'admin' && password === 'password') {
-            const mockUser: User = {
-                id: '1',
-                username: 'admin',
-                email: 'admin@gwms.gov.in',
-                firstName: 'System',
-                lastName: 'Administrator',
-                roles: ['admin']
-            };
-            
-            const mockResponse: LoginResponse = {
-                token: 'mock-jwt-token-' + Date.now(),
-                user: mockUser
-            };
+  private readonly BASE_URL = 'http://203.100.79.155';
 
-            // Simulate API delay
-            return new Observable<LoginResponse>(observer => {
-                setTimeout(() => {
-                    this.setToken(mockResponse.token, rememberMe);
-                    this.setUser(mockResponse.user, rememberMe);
-                    this.currentUserSubject.next(mockResponse.user);
-                    observer.next(mockResponse);
-                    observer.complete();
-                }, 500);
-            });
-        } else {
-            // Return error for invalid credentials
-            return new Observable<LoginResponse>(observer => {
-                setTimeout(() => {
-                    observer.error({ status: 401, message: 'Invalid username or password' });
-                }, 500);
-            });
-        }
-    }
+  private readonly LOGIN_API = `${this.BASE_URL}/api/Auth/login`;
+  private readonly TOKEN_API = `${this.BASE_URL}/api/Auth/GetToken`;
 
-    /**
-     * Logout user
-     */
-    logout(): void {
-        this.removeToken();
-        this.removeUser();
-        this.currentUserSubject.next(null);
-        this.router.navigate(['/auth/login']);
-    }
 
-    /**
-     * Check if user is authenticated
-     */
-    isAuthenticated(): boolean {
-        return !!this.getToken();
-    }
+  private currentUserSubject = new BehaviorSubject<User | null>(this.getStoredUser());
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-    /**
-     * Get current user
-     */
-    getCurrentUser(): User | null {
-        return this.currentUserSubject.value;
-    }
+  // ✅ PAGE LOAD TOKEN
+  getInitialToken(): Observable<any> {
+    return this.http.post<any>(this.TOKEN_API, {}).pipe(
+      tap(res => {
+        const token = res.authToken;
+        sessionStorage.setItem(this.TOKEN_KEY, token);
+      })
+    );
+  }
 
-    /**
-     * Get stored token
-     */
-    getToken(): string | null {
-        const token = sessionStorage.getItem(this.TOKEN_KEY) || localStorage.getItem(this.TOKEN_KEY);
-        return token;
-    }
+  //  LOGIN (NO ENCRYPTION)
+  login(username: string, password: string, rememberMe: boolean = false): Observable<any> {
 
-    /**
-     * Set authentication token
-     */
-    private setToken(token: string, rememberMe: boolean): void {
-        if (rememberMe) {
-            localStorage.setItem(this.TOKEN_KEY, token);
-        } else {
-            sessionStorage.setItem(this.TOKEN_KEY, token);
-        }
-    }
+  const body = {
+    userName: username,
+    password: password   
+  };
 
-    /**
-     * Remove authentication token
-     */
-    private removeToken(): void {
-        sessionStorage.removeItem(this.TOKEN_KEY);
-        localStorage.removeItem(this.TOKEN_KEY);
-    }
+  return this.http.post<any>(this.LOGIN_API, body).pipe(
+    tap(res => {
 
-    /**
-     * Set user data
-     */
-    private setUser(user: User, rememberMe: boolean): void {
-        const userData = JSON.stringify(user);
-        if (rememberMe) {
-            localStorage.setItem(this.USER_KEY, userData);
-        } else {
-            sessionStorage.setItem(this.USER_KEY, userData);
-        }
-    }
+      const token = res?.token || res?.data || res?.authToken;
 
-    /**
-     * Get stored user
-     */
-    private getStoredUser(): User | null {
-        const userData = sessionStorage.getItem(this.USER_KEY) || localStorage.getItem(this.USER_KEY);
-        return userData ? JSON.parse(userData) : null;
-    }
+      this.setToken(token, rememberMe);
 
-    /**
-     * Remove user data
-     */
-    private removeUser(): void {
-        sessionStorage.removeItem(this.USER_KEY);
-        localStorage.removeItem(this.USER_KEY);
-    }
+      try {
+        const decoded: any = jwtDecode(token);
 
-    /**
-     * Check if user has specific role
-     */
-    hasRole(role: string): boolean {
-        const user = this.getCurrentUser();
-        return user?.roles?.includes(role) || false;
-    }
+        const user: User = {
+          id: decoded.id,
+          username: decoded.sub,
+          email: decoded.sub,
+          roles: [decoded.rol]
+        };
 
-    /**
-     * Refresh token (if needed)
-     */
-    refreshToken(): Observable<LoginResponse> {
-        const refreshToken = localStorage.getItem('wms_refresh_token');
-        if (!refreshToken) {
-            this.logout();
-            return of({} as LoginResponse);
-        }
+        this.setUser(user, rememberMe);
+        this.currentUserSubject.next(user);
+      } catch (e) {
+        console.warn('JWT decode failed');
+      }
+    })
+  );
+}
+   
 
-        return this.http.post<LoginResponse>(`${this.API_URL}/refresh`, { refreshToken }).pipe(
-            tap((response) => {
-                this.setToken(response.token, true);
-                if (response.user) {
-                    this.setUser(response.user, true);
-                    this.currentUserSubject.next(response.user);
-                }
-            })
-        );
-    }
+  logout(): void {
+    sessionStorage.clear();
+    localStorage.clear();
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/auth/login']);
+  }
+  
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+  getToken(): string | null {
+    return sessionStorage.getItem(this.TOKEN_KEY) || localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  private setToken(token: string, rememberMe: boolean): void {
+    if (rememberMe) localStorage.setItem(this.TOKEN_KEY, token);
+    else sessionStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  private setUser(user: User, rememberMe: boolean): void {
+    const data = JSON.stringify(user);
+    if (rememberMe) localStorage.setItem(this.USER_KEY, data);
+    else sessionStorage.setItem(this.USER_KEY, data);
+  }
+
+  private getStoredUser(): User | null {
+    const data = sessionStorage.getItem(this.USER_KEY) || localStorage.getItem(this.USER_KEY);
+    return data ? JSON.parse(data) : null;
+  }
 }

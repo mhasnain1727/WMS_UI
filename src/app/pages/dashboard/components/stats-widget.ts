@@ -59,7 +59,7 @@ export class StatsWidget {
             value: '23',
             change: '5 urgent',
             changeText: 'need attention',
-            icon: 'pi-file-text',
+            icon: 'pi-file',
             iconBg: 'bg-orange-100 dark:bg-orange-400/10',
             iconColor: 'text-orange-500',
             changeColor: 'text-orange-500'

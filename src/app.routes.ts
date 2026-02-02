@@ -14,9 +14,11 @@ import { Outward } from './app/pages/outward/draft-tender-papers';
 import { Products } from './app/pages/masters/projects';
 import { Categories } from './app/pages/masters/contractors';
 import { Warehouses } from './app/pages/masters/divisions';
-import { Locations } from './app/pages/masters/work-categories';
-import { Suppliers } from './app/pages/masters/materials';
+import { WorkTypeMaster  } from './app/pages/masters/work-categories';
+import { Manpower } from './app/pages/masters/manpower';
 import { Customers } from './app/pages/masters/rate-analysis';
+import { Machinary } from './app/pages/masters/machinary';
+import{ EquipmentMaster } from './app/pages/masters/equipments';
 
 // Tender & Contract Management
 import { TenderCreation } from './app/pages/orders/tender-creation';
@@ -62,20 +64,22 @@ export const appRoutes: Routes = [
             { path: 'masters/projects', component: Products },
             { path: 'masters/contractors', component: Categories },
             { path: 'masters/divisions', component: Warehouses },
-            { path: 'masters/work-categories', component: Locations },
-            { path: 'masters/materials', component: Suppliers },
+            { path: 'masters/work-categories', component: WorkTypeMaster },
+            { path: 'masters/manpower', component: Manpower },
             { path: 'masters/rate-analysis', component: Customers },
+            { path: 'masters/machinery', component: Machinary },
+            { path: 'masters/equipments', component: EquipmentMaster },
 
             // Tender & Contract Management
             { path: 'tender-management/tender-creation', component: TenderCreation },
             { path: 'tender-management/bid-evaluation', component: BidEvaluation },
             { path: 'tender-management/contract-award', component: ContractAward },
 
-// Project Execution & Monitoring
-{ path: 'project-execution/work-order-management', component: WorkOrderManagement },
-{ path: 'project-execution/progress-monitoring', component: ProgressMonitoring },
-{ path: 'project-execution/e-measurement-book', component: EMeasurementBook },
-{ path: 'project-execution/e-billing', component: EBilling },
+            // Project Execution & Monitoring
+            { path: 'project-execution/work-order-management', component: WorkOrderManagement },
+            { path: 'project-execution/progress-monitoring', component: ProgressMonitoring },
+            { path: 'project-execution/e-measurement-book', component: EMeasurementBook },
+            { path: 'project-execution/e-billing', component: EBilling },
 
             // Reports & Analytics
             { path: 'reports/project-reports', component: StockReport },
