@@ -19,10 +19,21 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 
 import { AdminService } from '../../layout/service/admin.service';
 
+/* ===== INTERFACES ===== */
 interface EquipmentItem {
   id: number;
   toolName: string;
   unit: number;
+}
+
+interface ApiResponse<T> {
+  status?: string;
+  message?: string;
+  data?: T;
+}
+
+interface EquipmentResponse {
+  id: number;
 }
 
 @Component({
@@ -92,7 +103,6 @@ interface EquipmentItem {
           <td>{{ item.toolName }}</td>
           <td>{{ item.unit }}</td>
           <td style="text-align:right; white-space:nowrap;">
-            <!-- EDIT -->
             <button
               pButton
               icon="pi pi-pencil"
@@ -100,7 +110,6 @@ interface EquipmentItem {
               (click)="openEditDialog(item)">
             </button>
 
-            <!-- DELETE -->
             <button
               pButton
               icon="pi pi-trash"
@@ -161,17 +170,9 @@ export class EquipmentMaster {
   isEditMode = false;
   selectedEquipmentId: number | null = null;
 
-  // ===== MASTER DATA =====
-  equipments: EquipmentItem[] = [
-    { id: 1, toolName: 'Drilling Machine', unit: 5 },
-    { id: 2, toolName: 'Welding Machine', unit: 3 },
-    { id: 3, toolName: 'Water Pump', unit: 4 }
-  ];
-
-  // ===== FILTERED TABLE DATA =====
+  equipments: EquipmentItem[] = [];
   filteredEquipments: EquipmentItem[] = [];
 
-  // ===== STRONGLY TYPED FORM =====
   form!: FormGroup<{
     toolName: FormControl<string | null>;
     unit: FormControl<number | null>;
@@ -190,22 +191,16 @@ export class EquipmentMaster {
         Validators.min(1)
       ])
     });
-
-    // 🔥 INIT FILTER
-    this.filteredEquipments = [...this.equipments];
   }
 
-  // ===== SEARCH =====
   onSearch(event: Event) {
     const q = (event.target as HTMLInputElement).value.toLowerCase();
-
     this.filteredEquipments = this.equipments.filter(e =>
       e.toolName.toLowerCase().includes(q) ||
       e.unit.toString().includes(q)
     );
   }
 
-  // ===== ADD =====
   openAddDialog() {
     this.isEditMode = false;
     this.selectedEquipmentId = null;
@@ -213,103 +208,71 @@ export class EquipmentMaster {
     this.showDialog = true;
   }
 
-  // ===== EDIT =====
   openEditDialog(item: EquipmentItem) {
     this.isEditMode = true;
     this.selectedEquipmentId = item.id;
-
-    this.form.patchValue({
-      toolName: item.toolName,
-      unit: item.unit
-    });
-
+    this.form.patchValue(item);
     this.showDialog = true;
   }
 
-  // ===== SAVE (ADD / UPDATE) =====
+  /* ===== REAL API ADD ===== */
   saveEquipment() {
 
+    if (this.form.invalid) return;
+
     const payload = {
-      id: this.selectedEquipmentId,
       toolName: this.form.value.toolName!,
       unit: this.form.value.unit!,
       network_ID: 'WEB',
       terminal_ID: 'ADMIN'
     };
 
-    if (this.isEditMode) {
+    if (!this.isEditMode) {
+      this.adminApi.addEquipment(payload).subscribe({
+        next: (res: ApiResponse<EquipmentResponse>) => {
 
-      const index = this.equipments.findIndex(
-        e => e.id === this.selectedEquipmentId
-      );
+          this.equipments.unshift({
+            id: res.data?.id ?? Date.now(),
+            toolName: payload.toolName,
+            unit: payload.unit
+          });
 
-      if (index !== -1) {
-        this.equipments[index] = {
-          id: this.selectedEquipmentId!,
-          toolName: payload.toolName,
-          unit: payload.unit
-        };
-      }
+          this.filteredEquipments = [...this.equipments];
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Updated',
-        detail: 'Equipment updated successfully'
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Equipment added successfully'
+          });
+
+          this.showDialog = false;
+          this.form.reset();
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to add equipment'
+          });
+        }
       });
-
-      // ❌ API (later)
-      // this.adminApi.updateEquipment(payload).subscribe();
-
-    } else {
-
-      this.equipments.unshift({
-        id: Date.now(),
-        toolName: payload.toolName,
-        unit: payload.unit
-      });
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Equipment added successfully'
-      });
-
-      // ❌ API (later)
-      // this.adminApi.addEquipment(payload).subscribe();
+      return;
     }
-
-    // 🔁 REFRESH FILTER
-    this.filteredEquipments = [...this.equipments];
-
-    this.showDialog = false;
-    this.form.reset();
   }
 
-  // ===== DELETE (STANDARD – SAME AS MANPOWER) =====
   confirmDelete(id: number) {
-
     this.confirmationService.confirm({
       header: 'Confirm Delete',
       message: 'Are you sure you want to delete this equipment?',
       icon: 'pi pi-exclamation-triangle',
-      acceptButtonStyleClass: 'p-button-danger',
-      rejectButtonStyleClass: 'p-button-secondary',
-      acceptLabel: 'Yes, Delete',
-      rejectLabel: 'Cancel',
-
       accept: () => {
-
         this.equipments = this.equipments.filter(e => e.id !== id);
         this.filteredEquipments = [...this.equipments];
-
         this.messageService.add({
           severity: 'success',
           summary: 'Deleted',
           detail: 'Equipment deleted successfully'
         });
-
-        // ❌ API (later)
-        // this.adminApi.deleteEquipment({ id, network_ID:'WEB', terminal_ID:'ADMIN' }).subscribe();
       }
     });
   }

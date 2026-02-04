@@ -6,7 +6,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // ❌ token & login APIs pe header mat bhejo
   if (
-    req.url.includes('/api/Auth/GetToken') ||
+    req.url.includes('/api/Auth/GetTokenRoleBased') ||
     req.url.includes('/api/Auth/login')
   ) {
     return next(req);

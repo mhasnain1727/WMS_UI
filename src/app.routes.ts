@@ -5,6 +5,10 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { authGuard } from './app/core/guards/auth.guard';
 
+// dashboards
+import { ContractorDashboard } from './app/pages/dashboard/contractor-dashboard/contractor-dashboard';
+import { ContractorProfile } from '@/pages/dashboard/contractor-dashboard/contractor-profile';
+
 // Project Planning
 import { Inventory } from './app/pages/inventory/estimate-preparation';
 import { Inward } from './app/pages/inward/technical-sanctions';
@@ -54,6 +58,9 @@ export const appRoutes: Routes = [
         children: [
             // Dashboard
             { path: 'dashboard', component: Dashboard },
+            {path: 'contractor-dashboard', component: ContractorDashboard},
+            {path: 'dashboard/contractor-dashboard/contractor-profile', component: ContractorProfile},
+            
 
             // Project Planning
             { path: 'project-planning/estimate-preparation', component: Inventory },

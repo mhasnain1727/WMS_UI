@@ -8,6 +8,8 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
+import { CryptoJsService } from '../../layout/service/crypto-js.service';
+
 
 @Component({
     selector: 'app-login',
@@ -337,6 +339,8 @@ export class Login implements OnInit {
     private authService = inject(AuthService);
     private router = inject(Router);
     private messageService = inject(MessageService);
+    private cryptoJsService = inject(CryptoJsService);
+
 
     username: string = '';
     password: string = '';
@@ -359,45 +363,51 @@ export class Login implements OnInit {
 
     onSubmit(): void {
 
-        if (!this.username || !this.password) {
-        this.messageService.add({
-            severity: 'warn',
-            summary: 'Validation Error',
-            detail: 'Please enter both username and password',
-            life: 3000
-        });
-        return;
-        }
+  if (!this.username || !this.password) {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Validation Error',
+      detail: 'Please enter both username and password',
+      life: 3000
+    });
+    return;
+  }
 
-        this.loading = true;
+  this.loading = true;
 
-        
-        this.authService.login(this.username, this.password, this.rememberMe).subscribe({
+  const encryptedPassword =
+    this.cryptoJsService.encryptPassword(this.password);
 
+  this.authService.login(
+    this.username,
+    encryptedPassword,
+    this.rememberMe
+  ).subscribe({
 
-        next: () => {
-            this.loading = false;
+    next: () => {
+      this.loading = false;
 
-            this.messageService.add({
-            severity: 'success',
-            summary: 'Login Successful',
-            detail: 'Welcome back!',
-            life: 2000
-            });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Login Successful',
+        detail: 'Welcome back!',
+        life: 2000
+      });
 
-            this.router.navigate(['/dashboard']);
-        },
+      this.router.navigate(['/dashboard']);
+    },
 
-            error: () => {
-                this.loading = false;
-                this.messageService.add({
-                severity: 'error',
-                summary: 'Login Failed',
-                detail: 'Invalid username or password',
-                life: 3000
-                });
-            }
-        });
+    error: () => {
+      this.loading = false;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Login Failed',
+        detail: 'Invalid username or password',
+        life: 3000
+      });
     }
+  });
+}
+
 }
 

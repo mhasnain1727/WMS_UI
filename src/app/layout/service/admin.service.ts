@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminService {
+  updateManpower(payload: { id: number | null; role: string; grade: string; network_ID: string; terminal_ID: string; }) {
+    throw new Error('Method not implemented.');
+  }
 
   private baseUrl = 'http://203.100.79.155';
 

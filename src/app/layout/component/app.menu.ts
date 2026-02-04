@@ -8,21 +8,42 @@ import { AppMenuitem } from './app.menuitem';
     selector: 'app-menu',
     standalone: true,
     imports: [CommonModule, AppMenuitem, RouterModule],
-    template: `<ul class="layout-menu">
-        <ng-container *ngFor="let item of model; let i = index">
-            <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
-            <li *ngIf="item.separator" class="menu-separator"></li>
-        </ng-container>
-    </ul> `
+    template: `
+        <ul class="layout-menu">
+            <ng-container *ngFor="let item of model; let i = index">
+                <li
+                    app-menuitem
+                    *ngIf="!item.separator"
+                    [item]="item"
+                    [index]="i"
+                    [root]="true">
+                </li>
+                <li *ngIf="item.separator" class="menu-separator"></li>
+            </ng-container>
+        </ul>
+    `
 })
 export class AppMenu {
+
+    // 🔴 TEMP ROLE (baad me API/JWT se aayega)
+    role: 'ADMIN' | 'CONTRACTOR' = 'CONTRACTOR';
+
     model: MenuItem[] = [];
 
     ngOnInit() {
-        this.model = [
+        this.model = this.role === 'ADMIN'
+            ? this.getAdminMenu()
+            : this.getContractorMenu();
+    }
+
+    // 🟢 ADMIN MENU
+    private getAdminMenu(): MenuItem[] {
+        return [
             {
                 label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }]
+                items: [
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }
+                ]
             },
             {
                 label: 'Project Planning',
@@ -46,39 +67,38 @@ export class AppMenu {
                 ]
             },
             {
-                label: 'Tender & Contract Management',
-                items: [
-                    { label: 'Tender Creation', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/tender-management/tender-creation'] },
-                    { label: 'Bid Evaluation', icon: 'pi pi-fw pi-search', routerLink: ['/tender-management/bid-evaluation'] },
-                    { label: 'Contract Award', icon: 'pi pi-fw pi-briefcase', routerLink: ['/tender-management/contract-award'] }
-                ]
-            },
-            {
-                label: 'Project Execution & Monitoring',
-                items: [
-                    { label: 'Work Order Management', icon: 'pi pi-fw pi-play-circle', routerLink: ['/project-execution/work-order-management'] },
-                    { label: 'Progress Monitoring', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/project-execution/progress-monitoring'] },
-                    { label: 'E-Measurement Book', icon: 'pi pi-fw pi-book', routerLink: ['/project-execution/e-measurement-book'] },
-                    { label: 'E-Billing', icon: 'pi pi-fw pi-money-bill', routerLink: ['/project-execution/e-billing'] }
-                ]
-            },
-            {
-                label: 'Reports & Analytics',
-                items: [
-                    { label: 'Project Reports', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/reports/project-reports'] },
-                    { label: 'Financial Reports', icon: 'pi pi-fw pi-chart-line', routerLink: ['/reports/financial-reports'] },
-                    { label: 'Progress Reports', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/reports/progress-reports'] },
-                    { label: 'Contractor Performance', icon: 'pi pi-fw pi-star', routerLink: ['/reports/contractor-performance'] },
-                    { label: 'Compliance Reports', icon: 'pi pi-fw pi-shield', routerLink: ['/reports/compliance-reports'] }
-                ]
-            },
-            {
                 label: 'System Administration',
                 items: [
                     { label: 'User Management', icon: 'pi pi-fw pi-user', routerLink: ['/admin/user-management'] },
                     { label: 'Roles & Permissions', icon: 'pi pi-fw pi-lock', routerLink: ['/admin/roles-permissions'] },
                     { label: 'System Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/admin/system-settings'] },
                     { label: 'Audit Trail', icon: 'pi pi-fw pi-list', routerLink: ['/admin/audit-trail'] }
+                ]
+            }
+        ];
+    }
+
+    // 🔵 CONTRACTOR MENU
+    private getContractorMenu(): MenuItem[] {
+        return [
+            {
+                label: 'Home',
+                items: [
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/contractor/dashboard'] }
+                ]
+            },
+            {
+                label: 'My Profile',
+                items: [
+                    { label: 'Profile Details', icon: 'pi pi-fw pi-user', routerLink: ['/dashboard/contractor-dashboard/contractor-profile'] }
+                ]
+            },
+            {
+                label: 'My Work',
+                items: [
+                    { label: 'Work Orders', icon: 'pi pi-fw pi-play-circle', routerLink: ['/project-execution/work-order-management'] },
+                    { label: 'Progress Monitoring', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/project-execution/progress-monitoring'] },
+                    { label: 'E-Billing', icon: 'pi pi-fw pi-money-bill', routerLink: ['/project-execution/e-billing'] }
                 ]
             }
         ];
