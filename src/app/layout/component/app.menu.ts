@@ -25,8 +25,8 @@ import { AppMenuitem } from './app.menuitem';
 })
 export class AppMenu {
 
-    // 🔴 TEMP ROLE (baad me API/JWT se aayega)
-    role: 'ADMIN' | 'CONTRACTOR' = 'CONTRACTOR';
+   
+    role: 'ADMIN' | 'CONTRACTOR' = 'ADMIN'; // This should ideally come from an authentication service
 
     model: MenuItem[] = [];
 

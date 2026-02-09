@@ -14,7 +14,15 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
- 
+ //POST APIs for adding data to database
+
+  addNewUser(data: any) {
+    return this.http.post(`
+      ${this.baseUrl}/api/Admin/AddNewUser`,
+      data
+    );
+ }
+
   addMachinery(data: any): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/api/Admin/InsertMachinaryMasterData`,
@@ -35,14 +43,29 @@ export class AdminService {
       data
     );
   }
-
+  
   addWorkType(body: any) {
-    return this.http.post('/api/Admin/InsertWorkTypeMasterData', body);
+    return this.http.post(`${this.baseUrl}/api/Admin/InsertWorkTypeMasterData`, body);
   }
 
-  addSubWorkType(body:any){
-    return this.http.post('/api/Admin/InsertSubWorkTypeMasterData', body);
+  addSubWorkType(body: any) {
+    return this.http.post(`${this.baseUrl}/api/Admin/InsertSubWorkTypeMasterData`, body);
   }
 
+ //GET APIs for fetching data from database
+  getMachinery(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/Admin/GetMachinaryMaster`); 
+  }
+
+  getEquipments(): Observable<any> {
+      return this.http.get(`${this.baseUrl}/api/Admin/GetEquipmentsMaster`);
+    }
+
+  getManpower(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/Admin/GetManPowerMaster`);  
+  }
+  getRoles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/Admin/GetRoles`);  
+  }
 
 }

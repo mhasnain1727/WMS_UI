@@ -1,14 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 /* PrimeNG Modules */
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
-
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../core/services/auth.service';
+import { MessageService } from 'primeng/api';
+import { Toast } from "primeng/toast";
+import { CryptoJsService } from '@/layout/service/crypto-js.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -19,8 +23,9 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     ButtonModule,
     FloatLabelModule,
-    PasswordModule
-  ],
+    PasswordModule,
+    Toast
+],
   styles: [`
     .fade-in { animation: fadeIn 0.3s ease-in-out; }
     @keyframes fadeIn {
@@ -58,6 +63,9 @@ import { PasswordModule } from 'primeng/password';
     }
 
     :host { display: block; height: 100vh; overflow: hidden; }
+
+    :host ::ng-deep .p-toast { z-index: 9999; }
+
   `],
   template: `
   <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-100 via-blue-50 to-purple-100">
@@ -171,23 +179,40 @@ import { PasswordModule } from 'primeng/password';
       </div>
     </div>
   </div>
+
+  <p-toast></p-toast>
+
+  <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-100 via-blue-50 to-purple-100">
+    <button pButton type="button" 
+      [label]="isLoading ? 'Processing...' : 'Create Account'"
+      [disabled]="isLoading"
+      class="p-button-rounded p-button-lg w-full bg-emerald-600 hover:bg-emerald-700 border-none shadow-lg py-3.5 font-bold"
+      (click)="submit()">
+    </button>
+    
+    </div>
   `
 })
 export class Signup {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private messageService = inject(MessageService);
+  private cryptoJsService = inject(CryptoJsService);
+
   roleSelected = false;
   accountType: 'CONTRACTOR' | 'COMPANY' | null = null;
+  isLoading = false;
 
   form = this.fb.group({
-    username: ['', Validators.required],
+    username: ['', [Validators.required]], 
     email: ['', [Validators.required, Validators.email]],
-    mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // 10 digit numeric check
+    mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], 
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', Validators.required],
-    roleId: ['']
-  }, { validators: this.passwordMatchValidator }); // Validator added here
+    roleId: [0] 
+  }, { validators: this.passwordMatchValidator });
 
-  // Password Match Function
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -197,13 +222,64 @@ export class Signup {
   selectAccountType(type: 'CONTRACTOR' | 'COMPANY') {
     this.accountType = type;
     this.roleSelected = true;
-    this.form.patchValue({ roleId: type });
+    const numericRoleId = type === 'CONTRACTOR' ? 1 : 5; 
+    this.form.patchValue({ roleId: numericRoleId });
   }
 
   submit() {
-    this.form.markAllAsTouched();
-    if (this.form.valid) {
-      console.log('Working! Payload:', this.form.value);
+    // Form validation check
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.messageService.add({ 
+        severity: 'warn', 
+        summary: 'Invalid Form', 
+        detail: 'Please check all fields before submitting.' 
+      });
+      return;
     }
+
+    this.isLoading = true;
+    const val = this.form.value;
+
+    // Password Encryption
+    const encryptedPassword = this.cryptoJsService.encryptPassword(val.password || '');
+    
+    // Final Payload exactly matching your JSON structure
+    const apiPayload = {
+      name: val.username?.trim(),
+      roleId: Number(val.roleId), 
+      email: val.email?.trim(),
+      password: encryptedPassword,
+      mobile: String(val.mobile), 
+      network_ID: "NA",
+      terminal_ID: "NA"
+    };
+
+    this.authService.register(apiPayload).subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Success', 
+          detail: 'Registration Successful! Redirecting to login...',
+          life: 3000
+        });
+        
+        // Success ke baad login page par bhejna
+        setTimeout(() => this.router.navigate(['/auth/login']), 2000);
+      },
+      error: (err: any) => {
+        this.isLoading = false;
+        // Error message handling (Backend se message na milne par default message)
+        const errorDetail = err.error?.message || err.error || 'Server error. Please try again later.';
+        
+        this.messageService.add({ 
+          severity: 'error', 
+          summary: 'Registration Failed', 
+          detail: errorDetail,
+          life: 5000
+        });
+      }
+    });
   }
 }

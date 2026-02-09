@@ -1,24 +1,27 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  // ❌ token & login APIs pe header mat bhejo
-  if (
-    req.url.includes('/api/Auth/GetTokenRoleBased') ||
-    req.url.includes('/api/Auth/login')
-  ) {
+  // ❌ In APIs par header nahi bhejna hai
+  const skippedUrls = ['/api/Auth/GetToken', '/api/Auth/login'];
+  const shouldSkip = skippedUrls.some(url => req.url.includes(url));
+
+  if (shouldSkip) {
     return next(req);
   }
 
-  const authService = inject(AuthService);
-  const token = authService.getToken();
+  // ✅ Session storage se decrypted token uthana
+  const token = sessionStorage.getItem('access_token');
 
   if (token) {
-    req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` }
+    const authReq = req.clone({
+      setHeaders: { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
     });
+    return next(authReq);
   }
 
   return next(req);

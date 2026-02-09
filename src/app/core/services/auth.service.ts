@@ -44,37 +44,14 @@ export class AuthService {
 
   //  LOGIN (NO ENCRYPTION)
   login(username: string, password: string, rememberMe: boolean = false): Observable<any> {
+    const body = {
+      userName: username,
+      password: password   
+    };
 
-  const body = {
-    userName: username,
-    password: password   
-  };
-
-  return this.http.post<any>(this.LOGIN_API, body).pipe(
-    tap(res => {
-
-      const token = res?.token || res?.data || res?.authToken;
-
-      this.setToken(token, rememberMe);
-
-      try {
-        const decoded: any = jwtDecode(token);
-
-        const user: User = {
-          id: decoded.id,
-          username: decoded.sub,
-          email: decoded.sub,
-          roles: [decoded.rol]
-        };
-
-        this.setUser(user, rememberMe);
-        this.currentUserSubject.next(user);
-      } catch (e) {
-        console.warn('JWT decode failed');
-      }
-    })
-  );
-}
+    return this.http.post<any>(this.LOGIN_API, body); 
+    
+  }
    
 
   logout(): void {
@@ -82,6 +59,19 @@ export class AuthService {
     localStorage.clear();
     this.currentUserSubject.next(null);
     this.router.navigate(['/auth/login']);
+  }
+
+  //signup
+  register(userData: any): Observable<any> {
+    
+    const REGISTER_API = `${this.BASE_URL}/api/Login/SignUpUser`;
+
+    return this.http.post<any>(REGISTER_API, userData).pipe(
+      tap(res => {
+        
+        console.log('User Registered Successfully in WMS');
+      })
+    );
   }
   
 

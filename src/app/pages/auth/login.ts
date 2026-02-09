@@ -9,6 +9,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../core/services/auth.service';
 import { CryptoJsService } from '../../layout/service/crypto-js.service';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -361,51 +362,77 @@ export class Login implements OnInit {
         });
     }
 
-    onSubmit(): void {
-
+   onSubmit(): void {
   if (!this.username || !this.password) {
     this.messageService.add({
       severity: 'warn',
       summary: 'Validation Error',
-      detail: 'Please enter both username and password',
-      life: 3000
+      detail: 'Please enter both username and password'
     });
     return;
   }
 
   this.loading = true;
 
-  const encryptedPassword =
-    this.cryptoJsService.encryptPassword(this.password);
+  // 1. Password encrypt kiya (CBC Mode)
+  const encryptedPassword = this.cryptoJsService.encryptPassword(this.password);
 
-  this.authService.login(
-    this.username,
-    encryptedPassword,
-    this.rememberMe
-  ).subscribe({
+  this.authService.login(this.username, encryptedPassword, this.rememberMe).subscribe({
+    next: (res: any) => {
+      // 2. Response ke 'data' ko DecryptToken se decrypt kiya (Static Key Mode)
+      const decryptedString = this.cryptoJsService.DecryptToken(res.data);
 
-    next: () => {
+      if (decryptedString) {
+        try {
+          // 3. String ko JSON mein badla
+          const decryptedRes = JSON.parse(decryptedString);
+
+          if (decryptedRes && decryptedRes.access_token) {
+            // 4. Token save kiya storage mein
+            sessionStorage.setItem('access_token', decryptedRes.access_token);
+            
+            // 5. User details decode/save (Optional)
+            if (decryptedRes.userName) {
+              sessionStorage.setItem('user_name', decryptedRes.userName);
+            }
+
+            this.messageService.add({
+              severity: 'success', 
+              summary: 'Login Successful', 
+              detail: 'Welcome back!', 
+              life: 2000 
+            });
+
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.handleError('Access token not found in decrypted data');
+          }
+        } catch (parseError) {
+          this.handleError('Failed to parse decrypted response');
+        }
+      } else {
+        this.handleError('Decryption failed: Invalid data or key');
+      }
       this.loading = false;
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Login Successful',
-        detail: 'Welcome back!',
-        life: 2000
-      });
-
-      this.router.navigate(['/dashboard']);
     },
-
-    error: () => {
+    error: (err) => {
       this.loading = false;
       this.messageService.add({
         severity: 'error',
         summary: 'Login Failed',
-        detail: 'Invalid username or password',
-        life: 3000
+        detail: 'Invalid credentials or server error'
       });
     }
+  });
+}
+
+// Helper method for error handling
+private handleError(detail: string) {
+  this.messageService.add({
+    severity: 'error',
+    summary: 'Error',
+    detail: detail,
+    life: 3000
   });
 }
 

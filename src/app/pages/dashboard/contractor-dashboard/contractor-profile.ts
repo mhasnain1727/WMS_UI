@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
@@ -8,6 +8,7 @@ import { SelectModule } from 'primeng/select';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Toast } from "primeng/toast";
 import { MessageService } from 'primeng/api';
+import { ContractorService } from '@/layout/service/contractor.service';
 
 @Component({
   selector: 'app-contractor-profile',
@@ -190,63 +191,94 @@ import { MessageService } from 'primeng/api';
         
         <p-divider class="my-20"></p-divider>
 
+        <!-- Company & Legal Information section only for COMPANY role -->
         <div *ngIf="role === 'COMPANY'">
-          <div class="text-center mb-16">
-            <div class="w-10 h-1 bg-[var(--primary-color)] mx-auto rounded-full mb-4"></div>
-            <h2 class="text-2xl font-black text-[var(--text-color)] tracking-tight">Company & Legal Information</h2>
-          </div>
+  <div class="text-center mb-16">
+    <div class="w-10 h-1 bg-[var(--primary-color)] mx-auto rounded-full mb-4"></div>
+    <h2 class="text-2xl font-black text-[var(--text-color)] tracking-tight">Company & Legal Information</h2>
+  </div>
 
-          <div class="grid grid-cols-12 gap-x-8 gap-y-10">
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Legal Status</label>
-              <p-select [options]="legalStatusOptions" formControlName="legalStatus" placeholder="Select Status" styleClass="premium-dropdown" class="w-full"></p-select>
-            </div>
+  <div class="grid grid-cols-12 gap-x-8 gap-y-10">
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Legal Status</label>
+      <p-select [options]="legalStatusOptions" 
+                formControlName="legalStatus" 
+                optionLabel="StatusName" 
+                optionValue="ID"
+                placeholder="Select Status" 
+                styleClass="premium-dropdown" 
+                class="w-full">
+      </p-select>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Company Category</label>
-              <p-select [options]="categoryOptions" formControlName="companyCategory" placeholder="Select Category" styleClass="premium-dropdown" class="w-full"></p-select>
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Company Category</label>
+      <p-select [options]="categoryOptions" 
+                formControlName="companyCategory" 
+                optionLabel="CategoryName" 
+                optionValue="CategoryID"
+                placeholder="Select Category" 
+                styleClass="premium-dropdown" 
+                class="w-full">
+      </p-select>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Status of Company</label>
-              <p-select [options]="companyStatusOptions" formControlName="statusOfCompany" placeholder="Select Status" styleClass="premium-dropdown" class="w-full"></p-select>
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Status of Company</label>
+      <p-select [options]="companyStatusOptions" 
+                formControlName="statusOfCompany" 
+                optionLabel="StatusName" 
+                optionValue="StatusID"
+                placeholder="Select Status" 
+                styleClass="premium-dropdown" 
+                class="w-full">
+      </p-select>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Registration Number</label>
-              <input pInputText formControlName="registrationNo" class="premium-input" placeholder="e.g. REG123456" />
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Registration Number</label>
+      <input pInputText formControlName="registrationNo" class="premium-input" placeholder="e.g. REG123456" />
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Registration Class</label>
-              <input pInputText formControlName="regClass" class="premium-input" placeholder="e.g. Class A" />
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Registration Class</label>
+      <p-select [options]="regClassOptions" 
+                formControlName="regClass" 
+                optionLabel="Class" 
+                optionValue="ClassID"
+                placeholder="Select Class" 
+                styleClass="premium-dropdown" 
+                class="w-full">
+      </p-select>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Establishment Year</label>
-              <p-datepicker formControlName="establishmentYear" view="year" dateFormat="yy" [showIcon]="true" placeholder="YYYY" styleClass="premium-datepicker"></p-datepicker>
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Establishment Year</label>
+      <p-datepicker formControlName="establishmentYear" view="year" dateFormat="yy" [showIcon]="true" placeholder="YYYY" styleClass="premium-datepicker"></p-datepicker>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Commencement Year</label>
-              <p-datepicker formControlName="commencementYear" view="year" dateFormat="yy" [showIcon]="true" placeholder="YYYY" styleClass="premium-datepicker"></p-datepicker>
-            </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Commencement Year</label>
+      <p-datepicker formControlName="commencementYear" view="year" dateFormat="yy" [showIcon]="true" placeholder="YYYY" styleClass="premium-datepicker"></p-datepicker>
+    </div>
 
-            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
-              <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Is ISO Certified?</label>
-              <p-select [options]="['Yes', 'No']" formControlName="isISOCertified" placeholder="Select" styleClass="premium-dropdown" class="w-full"></p-select>
-            </div>
-          </div>
+    <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+      <label class="text-[10px] font-black text-[var(--text-color-secondary)] uppercase tracking-[0.15em] ml-0.5">Is ISO Certified?</label>
+      <p-select [options]="['Yes', 'No']" formControlName="isISOCertified" placeholder="Select" styleClass="premium-dropdown" class="w-full"></p-select>
+    </div>
+  </div>
 
-          <div class="flex justify-center mt-12">
-            <button type="button" pButton (click)="saveCompanyDetails()" 
-                    label="Save Company Details" 
-                    class="p-button-rounded p-button-outlined border-[var(--primary-color)] text-[var(--primary-color)] font-bold px-10 hover:bg-[var(--primary-50)] transition-all">
-            </button>
-          </div>
-          <p-divider class="my-20"></p-divider>
-        </div>
+  <div class="flex justify-center mt-12">
+    <button type="button" pButton (click)="saveCompanyDetails()" 
+            label="Save Company Details" 
+            class="p-button-rounded p-button-outlined border-[var(--primary-color)] text-[var(--primary-color)] font-bold px-10 hover:bg-[var(--primary-50)] transition-all">
+    </button>
+  </div>
+  <p-divider class="my-20"></p-divider>
+</div>
+        <!--company & legal details end-->
 
+        <!-- Work & Tender Details section for both roles -->
         <div class="text-center mb-16">
           <div class="w-10 h-1 bg-[var(--primary-color)] mx-auto rounded-full mb-4"></div>
           <h2 class="text-2xl font-black text-[var(--text-color)] tracking-tight">Work & Tender Details</h2>
@@ -534,6 +566,11 @@ import { MessageService } from 'primeng/api';
   `]
 })
 export class ContractorProfile implements OnInit {
+  // Services Inject ki
+  private fb = inject(FormBuilder);
+  private messageService = inject(MessageService);
+  private contractorService = inject(ContractorService);
+
   username = 'rahul_123';
   headerFullName = ''; 
   email = 'rahul@gmail.com';
@@ -541,18 +578,27 @@ export class ContractorProfile implements OnInit {
   profileForm!: FormGroup;
   role: 'COMPANY' | 'CONTRACTOR' | string = 'COMPANY';
 
-  legalStatusOptions = ['Proprietorship', 'Partnership', 'Private Limited', 'Public Limited'];
-  categoryOptions = ['Micro', 'Small', 'Medium', 'Large'];
-  companyStatusOptions = ['Active', 'Dormant', 'Under Liquidation'];
+  // In arrays ko ab hum API se bharenge
+  legalStatusOptions: any[] = [];
+  categoryOptions: any[] = [];
+  companyStatusOptions: any[] = [];
+  regClassOptions: any[] = []; // Naya dropdown array
 
   tenderTypes: any[] = [{id: 1, name: 'Civil Tender'}, {id: 2, name: 'Electrical Tender'}];
   workTypes: any[] = [];
   subWorkTypes: any[] = [];
   uploadedDocs: { [key: string]: string } = {};
 
-  constructor(private fb: FormBuilder, private messageService: MessageService) {}
-
   ngOnInit() {
+    this.initForm();
+    
+    // Agar Role Company hai toh dropdowns load karo
+    if (this.role === 'COMPANY') {
+      this.loadCompanyMasters();
+    }
+  }
+
+  private initForm() {
     this.profileForm = this.fb.group({
       firstName: [''], surname: [''], dob: [null],
       country: ['India'], state: [''], city: [''], address: [''], postalCode: [''],
@@ -577,6 +623,33 @@ export class ContractorProfile implements OnInit {
     };
     Object.keys(companyControls).forEach(key => {
       this.profileForm.addControl(key, this.fb.control((companyControls as any)[key][0]));
+    });
+  }
+
+  // API se data load karne ka function
+  loadCompanyMasters() {
+    // 1. Legal Status Load
+    this.contractorService.getLegalStatus().subscribe({
+      next: (data) => this.legalStatusOptions = data,
+      error: (err) => console.error('Legal Status Error:', err)
+    });
+
+    // 2. Category Load
+    this.contractorService.getCompanyCategory().subscribe({
+      next: (data) => this.categoryOptions = data,
+      error: (err) => console.error('Category Error:', err)
+    });
+
+    // 3. Company Status Load
+    this.contractorService.getCompanyStatusMaster().subscribe({
+      next: (data) => this.companyStatusOptions = data,
+      error: (err) => console.error('Company Status Error:', err)
+    });
+
+    // 4. Registration Class Load
+    this.contractorService.getCompanyRegClassMaster().subscribe({
+      next: (data) => this.regClassOptions = data,
+      error: (err) => console.error('Reg Class Error:', err)
     });
   }
 
@@ -645,8 +718,13 @@ export class ContractorProfile implements OnInit {
 
   submitFinalProfile() {
     if (this.profileForm.valid) {
+      // Ab aap submit ke liye form value aur documents backend par bhej sakte hain
+      const finalPayload = {
+        ...this.profileForm.value,
+        uploadedDocuments: this.uploadedDocs
+      };
       this.messageService.add({ severity: 'success', summary: 'Profile Submitted', detail: 'Sent for verification' });
-      console.log("Final Data:", { form: this.profileForm.value, docs: this.uploadedDocs });
+      console.log("Final Data for API:", finalPayload);
     } else {
       this.messageService.add({ severity: 'error', summary: 'Invalid Form', detail: 'Please fill all required fields' });
     }
